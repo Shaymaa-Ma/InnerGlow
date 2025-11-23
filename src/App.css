@@ -1,38 +1,35 @@
-.App {
-  text-align: center;
+
+/* App.css - global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  /* Make room for fixed navbar */
+  padding-top: 100px; /* same as navbar height */
+  background: #f3edff; /* optional background */
 }
 
-.App-header {
-  background-color: #282c34;
+.page-content {
+  /* any wrapper for page sections */
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  overflow-x: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+/* Make sure links and buttons inherit font styling */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Optional: smooth scroll for all pages */
+html {
+  scroll-behavior: smooth;
 }

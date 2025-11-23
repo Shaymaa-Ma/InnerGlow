@@ -1,0 +1,73 @@
+.book-appointment-page {
+  padding: 100px 20px 60px;
+  min-height: 100vh;
+  background: #f3edff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Page title */
+.appointment-title {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #4c2c75;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s forwards;
+}
+
+/* Glass card style */
+.appointment-card {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 10px 30px rgba(110, 80, 200, 0.15);
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeUp 0.8s forwards;
+}
+
+
+/* Custom inputs */
+.custom-input {
+  border-radius: 12px;
+  border: 1px solid #d5c7ff;
+  padding: 10px 12px;
+  transition: 0.3s;
+}
+
+.custom-input:focus {
+  border-color: #b48aff;
+  box-shadow: 0 0 8px rgba(178, 140, 255, 0.5);
+  outline: none;
+}
+
+/* Submit button */
+.btn-appointment {
+  background: linear-gradient(135deg, #7b32ff, #b084ff);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.btn-appointment:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(122, 90, 248, 0.45);
+}
+
+/* Animations */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

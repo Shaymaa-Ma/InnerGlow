@@ -1,0 +1,117 @@
+body {
+  background-color: #f3eafe !important; 
+}
+/* Page fade-in animation */
+.fade-in-page {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Input styling */
+.custom-input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  padding: 8px 12px;
+  transition: 0.3s;
+}
+
+/* Highlight on focus / hover with lavender */
+.custom-input:focus,
+.custom-input:hover {
+  border-color: #b084f5; 
+  box-shadow: 0 0 5px #b084f5; 
+  outline: none;
+}
+
+/* Make input labels black */
+.card-stress .form-label {
+  color: #000 !important;
+  font-weight: 500;
+}
+
+/* Lavender button */
+.btn-lavender {
+  background: linear-gradient(135deg, #621ce3, #b084ff);  
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 0;
+  border-radius: 0;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.btn-lavender:hover {
+  background-color: #b084ff; 
+}
+
+/* Result box */
+.result-box {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  color: #000; 
+}
+
+/* Card styling */
+.card-stress, .card-history {
+  border-radius: 8px;
+}
+
+/* History card content */
+.card-history .card {
+  background: white !important; 
+  color: #000 !important; 
+  padding: 12px;
+}
+
+/* Specifically style the labels inside history cards */
+.card-history .card strong,
+.card-history .card em,
+.card-history .card p {
+  color: #000 !important;
+}
+
+/* Delete button in history */
+.btn-delete {
+  background: #b084f5;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-delete:hover {
+  background: #c4a6f8;
+  color: #fff;
+}
+
+.book-appointment-btn {
+  display: block; 
+  margin: 40px auto 0; 
+  padding: 14px 34px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #621ce3, #b084ff);
+  color: white;
+  box-shadow: 0 6px 20px rgba(122, 90, 248, 0.3);
+  transition: 0.3s ease;
+}
+
+.book-appointment-btn:hover {
+  background: #6843f5;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(122, 90, 248, 0.45);
+}
+
+
