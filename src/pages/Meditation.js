@@ -9,8 +9,9 @@ const Meditation = () => {
   const [customTime, setCustomTime] = useState("");
   const [unit, setUnit] = useState("seconds");
   const [history, setHistory] = useState([]);
-  const [dashOffset, setDashOffset] = useState(circumference);
-  const circumference = 2 * Math.PI * 60;
+ const circumference = 2 * Math.PI * 60;
+const [dashOffset, setDashOffset] = useState(circumference);
+
 
   // Scroll to top
   useEffect(() => {
