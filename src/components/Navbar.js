@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import "../styles/Navbar.css";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import logoImg from "../assets/InnerGlow_Logo.png"; 
+import { useAuth } from "../context/AuthContext"; // <-- import auth
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
+
+  const { user, logout } = useAuth(); // <-- get user + logout
 
   return (
     <nav className="navbar">
@@ -27,10 +30,18 @@ const Navbar = () => {
         <Link to="/contact" onClick={closeMenu}>Contact</Link>
       </div>
 
-      {/* Auth buttons now go to AuthPage */}
+      {/* Auth buttons */}
       <div className={`navbar-auth ${menuOpen ? "hidden" : ""}`}>
-        <Link to="/auth" className="login-btn">Login</Link>
-        <Link to="/auth" className="signup-btn">Signup</Link>
+        {user ? (
+          <button className="logout-btn" onClick={logout}>
+            Logout
+          </button>
+        ) : (
+          <>
+            <Link to="/auth" className="login-btn">Login</Link>
+            <Link to="/auth" className="signup-btn">Signup</Link>
+          </>
+        )}
       </div>
 
       {/* Burger Menu */}

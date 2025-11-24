@@ -5,12 +5,12 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Define allowed values
+ 
   const validEmail = "test@example.com";
   const validPassword = "password";
   const validName = "Test User";
 
-  // Login: only works with valid email + password
+  // LOGIN: sets user only if credentials match
   const login = (email, password) => {
     if (email === validEmail && password === validPassword) {
       setUser({ email, name: validName });
@@ -19,13 +19,12 @@ export const AuthProvider = ({ children }) => {
     return false;
   };
 
-  // Signup: only works with valid name + email + password
+  // SIGNUP: only validates input, does NOT log in
   const signup = (name, email, password) => {
     if (name === validName && email === validEmail && password === validPassword) {
-      setUser({ name, email });
-      return true;
+      return true; 
     }
-    return false;
+    return false; 
   };
 
   const logout = () => {

@@ -10,9 +10,9 @@ const StressDetection = () => {
   const [resp, setResp] = useState("");
   const [heart, setHeart] = useState("");
   const [result, setResult] = useState("");
-  const [history, setHistory] = useState([]); // No loading from localStorage
+  const [history, setHistory] = useState([]); 
 
-  // Save history only in state (NO localStorage)
+
   const saveHistory = (entry) => {
     const updated = [entry, ...history];
     setHistory(updated);
@@ -61,7 +61,7 @@ const StressDetection = () => {
   const handleDelete = (id) => {
     if (!window.confirm("Delete this entry?")) return;
     const updated = history.filter((item) => item.id !== id);
-    setHistory(updated); // No localStorage update
+    setHistory(updated); 
   };
 
   return (
