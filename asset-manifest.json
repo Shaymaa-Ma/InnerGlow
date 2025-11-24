@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/InnerGlow/static/css/main.9c3fd1b2.css",
-    "main.js": "/InnerGlow/static/js/main.7b936ce7.js",
+    "main.js": "/InnerGlow/static/js/main.d85be321.js",
     "static/js/787.d4aba7ab.chunk.js": "/InnerGlow/static/js/787.d4aba7ab.chunk.js",
     "static/media/heroImage.png": "/InnerGlow/static/media/heroImage.0af8fb8b853ab2f72e90.png",
     "static/media/whole-grains.png": "/InnerGlow/static/media/whole-grains.634b53976470f00befd7.png",
@@ -41,11 +41,11 @@
     "static/media/fa-v4compatibility.woff2": "/InnerGlow/static/media/fa-v4compatibility.e4340c52a50e727c6afa.woff2",
     "index.html": "/InnerGlow/index.html",
     "main.9c3fd1b2.css.map": "/InnerGlow/static/css/main.9c3fd1b2.css.map",
-    "main.7b936ce7.js.map": "/InnerGlow/static/js/main.7b936ce7.js.map",
+    "main.d85be321.js.map": "/InnerGlow/static/js/main.d85be321.js.map",
     "787.d4aba7ab.chunk.js.map": "/InnerGlow/static/js/787.d4aba7ab.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9c3fd1b2.css",
-    "static/js/main.7b936ce7.js"
+    "static/js/main.d85be321.js"
   ]
 }
