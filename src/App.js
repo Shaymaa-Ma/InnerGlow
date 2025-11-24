@@ -21,7 +21,7 @@ import BookAppointment from "./pages/BookAppointment";
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <Router >
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

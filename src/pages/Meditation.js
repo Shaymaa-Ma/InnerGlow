@@ -9,15 +9,16 @@ const Meditation = () => {
   const [customTime, setCustomTime] = useState("");
   const [unit, setUnit] = useState("seconds");
   const [history, setHistory] = useState([]);
-  const [dashOffset, setDashOffset] = useState(circumference);
   const circumference = 2 * Math.PI * 60;
+  const [dashOffset, setDashOffset] = useState(circumference);
+
 
   // Scroll to top
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  
+
   // Timer logic
   useEffect(() => {
     if (timeLeft <= 0) return;
