@@ -1,32 +1,31 @@
+// src/pages/Meditation.js
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Meditation.css";
 import { meditationVideos } from "../data/meditationVideos";
 
 const Meditation = () => {
+  // --- TIMER STATE ---
+  const circumference = 2 * Math.PI * 60; // Progress circle circumference
   const [timeLeft, setTimeLeft] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [customTime, setCustomTime] = useState("");
   const [unit, setUnit] = useState("seconds");
-  const [history, setHistory] = useState([]);
-  const circumference = 2 * Math.PI * 60;
   const [dashOffset, setDashOffset] = useState(circumference);
+  const [history, setHistory] = useState([]);
 
-
-  // Scroll to top
+  // --- SCROLL TO TOP ON LOAD ---
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-
-  // Timer logic
+  // --- TIMER LOGIC ---
   useEffect(() => {
     if (timeLeft <= 0) return;
 
     const timer = setTimeout(() => {
       const newTime = timeLeft - 1;
       setTimeLeft(newTime);
-
       setDashOffset(circumference * (newTime / totalTime));
 
       if (newTime === 0) {
@@ -36,26 +35,29 @@ const Meditation = () => {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [timeLeft]);
+  }, [timeLeft, totalTime, circumference]);
 
-
+  // --- SET TIMER ---
   const setTimer = (seconds) => {
     setTimeLeft(seconds);
     setTotalTime(seconds);
     setDashOffset(circumference);
   };
 
+  // --- CUSTOM TIMER ---
   const setCustomTimerFunc = () => {
     let seconds = Number(customTime);
     if (unit === "minutes") seconds *= 60;
     if (unit === "hours") seconds *= 3600;
+
     if (!seconds || seconds <= 0) return alert("Enter a valid time!");
     setTimer(seconds);
   };
 
+  // --- START / STOP ---
   const startTimer = () => {
     if (timeLeft <= 0) return alert("Select a timer first!");
-    setTimeLeft(timeLeft);
+    setTimeLeft(timeLeft); // Just to trigger effect
   };
 
   const stopTimer = () => {
@@ -63,6 +65,7 @@ const Meditation = () => {
     setDashOffset(circumference);
   };
 
+  // --- HISTORY MANAGEMENT ---
   const saveHistory = (duration) => {
     setHistory((prev) => [
       ...prev,
@@ -78,9 +81,11 @@ const Meditation = () => {
     setHistory((prev) => prev.filter((h) => h.id !== id));
   };
 
-  // Format mm:ss
+  // --- FORMAT TIME ---
   const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60).toString().padStart(2, "0");
+    const m = Math.floor(seconds / 60)
+      .toString()
+      .padStart(2, "0");
     const s = (seconds % 60).toString().padStart(2, "0");
     return `${m}:${s}`;
   };
@@ -95,7 +100,6 @@ const Meditation = () => {
       {/* TIMER CARD */}
       <section className="meditation-card">
         <h2>Meditation Timers</h2>
-
         <div className="timer-buttons">
           {[30, 60, 120, 300, 600, 900].map((t) => (
             <button key={t} onClick={() => setTimer(t)} className="timer-btn">
@@ -117,7 +121,9 @@ const Meditation = () => {
             <option value="minutes">Minutes</option>
             <option value="hours">Hours</option>
           </select>
-          <button onClick={setCustomTimerFunc} className="timer-btn">Set</button>
+          <button onClick={setCustomTimerFunc} className="timer-btn">
+            Set
+          </button>
         </div>
 
         {/* Progress ring */}
@@ -150,8 +156,12 @@ const Meditation = () => {
         <div className="timer-display">{formatTime(timeLeft)}</div>
 
         <div className="timer-controls">
-          <button className="timer-btn" onClick={startTimer}>Start</button>
-          <button className="timer-btn" onClick={stopTimer}>Stop</button>
+          <button className="timer-btn" onClick={startTimer}>
+            Start
+          </button>
+          <button className="timer-btn" onClick={stopTimer}>
+            Stop
+          </button>
         </div>
       </section>
 
@@ -177,7 +187,6 @@ const Meditation = () => {
         <h2>📝 Meditation History</h2>
         <ul className="history-list">
           {history.length === 0 && <li>No sessions yet.</li>}
-
           {history.map((h) => (
             <li key={h.id} className="history-item">
               {(h.duration / 60).toFixed(1)} min — {h.timestamp}
@@ -189,6 +198,7 @@ const Meditation = () => {
         </ul>
       </section>
 
+      {/* BOOK APPOINTMENT */}
       <Link to="/book-appointment">
         <button className="book-appointment-btn">Book Appointment</button>
       </Link>
