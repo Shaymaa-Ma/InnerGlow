@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Services.css";
 import { servicesData } from "../data/servicesData";
 import { Link } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap"; // <-- react-bootstrap
+import { Container, Row, Col } from "react-bootstrap"; 
 
 const Services = () => {
   return (
@@ -21,7 +21,6 @@ const Services = () => {
                 <h3>{service.title}</h3>
                 <p>{service.desc}</p>
 
-                {/* Use Link instead of <a> */}
                 <Link to={service.link} className="service-btn">
                   {service.btnText}
                 </Link>

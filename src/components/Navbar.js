@@ -6,7 +6,6 @@ import logoImg from "../assets/InnerGlow_Logo.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
 

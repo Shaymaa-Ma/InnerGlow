@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "../styles/StressDetection.css";
@@ -10,18 +10,7 @@ const StressDetection = () => {
   const [resp, setResp] = useState("");
   const [heart, setHeart] = useState("");
   const [result, setResult] = useState("");
-  const [history, setHistory] = useState([]);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("stressHistory");
-    if (saved) setHistory(JSON.parse(saved));
-  }, []);
-
-  const saveHistory = (entry) => {
-    const updated = [entry, ...history];
-    setHistory(updated);
-    localStorage.setItem("stressHistory", JSON.stringify(updated));
-  };
+  const [history, setHistory] = useState([]); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,8 +42,11 @@ const StressDetection = () => {
     };
 
     setResult(`Stress Level: ${stress_level}\n${advice}`);
-    saveHistory(entry);
 
+  
+    setHistory([entry, ...history]);
+
+    // reset form
     setSleep("");
     setSystolic("");
     setDiastolic("");
@@ -64,9 +56,7 @@ const StressDetection = () => {
 
   const handleDelete = (id) => {
     if (!window.confirm("Delete this entry?")) return;
-    const updated = history.filter((item) => item.id !== id);
-    setHistory(updated);
-    localStorage.setItem("stressHistory", JSON.stringify(updated));
+    setHistory(history.filter((item) => item.id !== id));
   };
 
   return (
@@ -74,20 +64,19 @@ const StressDetection = () => {
       <Container>
         <Card className="card-stress p-4 mb-4 shadow-lg">
           <h3 className="text-center mb-4">Detect Your Stress Level</h3>
+
           <Form onSubmit={handleSubmit}>
             {[
-              { label: "Sleeping Hours", value: sleep, setter: setSleep, type: "number", min: 1, max: 24 },
-              { label: "Systolic BP (mmHg)", value: systolic, setter: setSystolic, type: "number", min: 80, max: 250 },
-              { label: "Diastolic BP (mmHg)", value: diastolic, setter: setDiastolic, type: "number", min: 40, max: 150 },
-              { label: "Respiration Rate (breaths/min)", value: resp, setter: setResp, type: "number", min: 5, max: 40 },
-              { label: "Heart Rate (bpm)", value: heart, setter: setHeart, type: "number", min: 30, max: 200 },
+              { label: "Sleeping Hours", value: sleep, setter: setSleep, type: "number" },
+              { label: "Systolic BP (mmHg)", value: systolic, setter: setSystolic, type: "number" },
+              { label: "Diastolic BP (mmHg)", value: diastolic, setter: setDiastolic, type: "number" },
+              { label: "Respiration Rate (breaths/min)", value: resp, setter: setResp, type: "number" },
+              { label: "Heart Rate (bpm)", value: heart, setter: setHeart, type: "number" },
             ].map((input, idx) => (
               <Form.Group className="mb-3" key={idx}>
                 <Form.Label>{input.label}</Form.Label>
                 <Form.Control
                   type={input.type}
-                  min={input.min}
-                  max={input.max}
                   value={input.value}
                   onChange={(e) => input.setter(e.target.value)}
                   required
@@ -95,6 +84,7 @@ const StressDetection = () => {
                 />
               </Form.Group>
             ))}
+
             <button type="submit" className="w-100 btn-lavender">
               Predict
             </button>
@@ -109,30 +99,31 @@ const StressDetection = () => {
 
         <Card className="card-history p-3 shadow-lg">
           <h3 className="text-center mb-3">Your Stress History</h3>
+
           {history.length === 0 ? (
-            <p className="text-center text-muted">No history found. Run a test to see your results here.</p>
+            <p className="text-center text-muted">No history yet.</p>
           ) : (
             history.map((item) => (
               <Card
                 key={item.id}
-                className={`mb-2 p-3 border-start border-4 ${item.stress_level === "Low"
-                  ? "border-success"
-                  : item.stress_level === "Medium"
+                className={`mb-2 p-3 border-start border-4 ${
+                  item.stress_level === "Low"
+                    ? "border-success"
+                    : item.stress_level === "Medium"
                     ? "border-warning"
                     : "border-danger"
-                  }`}
+                }`}
               >
                 <h5>Stress Level: {item.stress_level}</h5>
+                <p><strong>Advice:</strong> {item.advice}</p>
                 <p>
-                  <strong>Advice:</strong> {item.advice}
+                  <strong>Sleep:</strong> {item.sleep} hrs | 
+                  <strong>BP:</strong> {item.bp} |
+                  <strong>Resp:</strong> {item.resp} | 
+                  <strong>Heart:</strong> {item.heart}
                 </p>
-                <p>
-                  <strong>Sleep:</strong> {item.sleep} hrs | <strong>BP:</strong> {item.bp} |{" "}
-                  <strong>Resp:</strong> {item.resp} | <strong>Heart:</strong> {item.heart}
-                </p>
-                <p>
-                  <em>Date: {item.timestamp}</em>
-                </p>
+                <p><em>Date: {item.timestamp}</em></p>
+
                 <Button
                   variant="danger"
                   size="sm"
@@ -146,10 +137,9 @@ const StressDetection = () => {
           )}
         </Card>
       </Container>
+
       <Link to="/book-appointment">
-        <button className="book-appointment-btn">
-          Book Appointment
-        </button>
+        <button className="book-appointment-btn">Book Appointment</button>
       </Link>
     </div>
   );

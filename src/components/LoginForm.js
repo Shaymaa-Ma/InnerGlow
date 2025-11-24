@@ -1,4 +1,4 @@
-// components/LoginForm.js
+
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
@@ -11,7 +11,6 @@ const LoginForm = () => {
     e.preventDefault();
     if (login(email, password)) {
       alert("Login successful!");
-      window.location.href = "/services";
     } else {
       alert("Invalid credentials!");
     }

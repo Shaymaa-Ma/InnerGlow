@@ -1,4 +1,3 @@
-// components/SignupForm.js
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
@@ -12,7 +11,6 @@ const SignupForm = () => {
     e.preventDefault();
     if (signup(name, email, password)) {
       alert("Signup successful!");
-      window.location.href = "/services";
     } else {
       alert("Please fill all fields correctly.");
     }

@@ -1,4 +1,4 @@
-// components/Login.js
+
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import LoginForm from './LoginForm';

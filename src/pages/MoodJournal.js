@@ -1,5 +1,5 @@
 // pages/MoodJournal.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import MoodForm from "../components/MoodForm";
 import MoodChart from "../components/MoodChart";
@@ -11,25 +11,22 @@ import { quotes } from "../data/moodData";
 const MoodJournal = () => {
   const [selectedMood, setSelectedMood] = useState("");
   const [journalText, setJournalText] = useState("");
-  const [entries, setEntries] = useState([]);
+  const [entries, setEntries] = useState([]); // Now memory only
   const [editIndex, setEditIndex] = useState(null);
   const [quote, setQuote] = useState("");
-
-  useEffect(() => {
-    const saved = localStorage.getItem("moodEntries");
-    if (saved) setEntries(JSON.parse(saved));
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("moodEntries", JSON.stringify(entries));
-  }, [entries]);
 
   const handleSave = () => {
     if (!selectedMood) {
       alert("Please select a mood before saving!");
       return;
     }
-    const newEntry = { mood: selectedMood, text: journalText, datetime: new Date().toLocaleString() };
+
+    const newEntry = {
+      mood: selectedMood,
+      text: journalText,
+      datetime: new Date().toLocaleString(),
+    };
+
     if (editIndex !== null) {
       const updated = [...entries];
       updated[editIndex] = newEntry;
@@ -38,6 +35,7 @@ const MoodJournal = () => {
     } else {
       setEntries([newEntry, ...entries]);
     }
+
     setSelectedMood("");
     setJournalText("");
   };
@@ -48,14 +46,19 @@ const MoodJournal = () => {
     setEditIndex(idx);
   };
 
-  const handleDelete = (idx) => setEntries(entries.filter((_, i) => i !== idx));
+  const handleDelete = (idx) => {
+    setEntries(entries.filter((_, i) => i !== idx));
+  };
 
-  const generateQuote = () => setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+  const generateQuote = () => {
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+  };
 
   return (
     <div className="mood-journal-page py-5">
       <div className="container">
         <h2 className="text-center mb-4 text-white">Mood & Journal Tracker</h2>
+
         <div className="row mb-4">
           <div className="col-lg-6 mb-3">
             <MoodForm
@@ -68,6 +71,7 @@ const MoodJournal = () => {
               editIndex={editIndex}
             />
           </div>
+
           <div className="col-lg-6 mb-3">
             <MoodChart entries={entries} />
           </div>
@@ -75,7 +79,11 @@ const MoodJournal = () => {
 
         <div className="row">
           <div className="col">
-            <EntryList entries={entries} handleEdit={handleEdit} handleDelete={handleDelete} />
+            <EntryList
+              entries={entries}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+            />
           </div>
         </div>
 

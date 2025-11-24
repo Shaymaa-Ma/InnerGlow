@@ -1,4 +1,4 @@
-// pages/AuthPage.js
+
 import React, { useState } from "react";
 import "../styles/AuthPage.css";
 import LoginForm from "../components/LoginForm";

@@ -8,7 +8,7 @@ import "../styles/Contact.css";
 const Contact = () => {
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // prevent page reload
+    e.preventDefault();
     alert("Thank you! Your message has been sent.");
   };
 

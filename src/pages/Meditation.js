@@ -1,38 +1,47 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Meditation.css";
 import { meditationVideos } from "../data/meditationVideos";
 
 const Meditation = () => {
-  if (typeof window !== "undefined") {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
   const [timeLeft, setTimeLeft] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [customTime, setCustomTime] = useState("");
   const [unit, setUnit] = useState("seconds");
   const [history, setHistory] = useState([]);
-  const intervalRef = useRef(null);
-  const progressRef = useRef(null);
-
+  const [dashOffset, setDashOffset] = useState(circumference);
   const circumference = 2 * Math.PI * 60;
 
+  // Scroll to top
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("meditationHistory")) || [];
-    setHistory(stored);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  
+  // Timer logic
   useEffect(() => {
-    localStorage.setItem("meditationHistory", JSON.stringify(history));
-  }, [history]);
+    if (timeLeft <= 0) return;
 
-  // ----- Timer Functions -----
+    const timer = setTimeout(() => {
+      const newTime = timeLeft - 1;
+      setTimeLeft(newTime);
+
+      setDashOffset(circumference * (newTime / totalTime));
+
+      if (newTime === 0) {
+        alert("Meditation Complete! 🎵");
+        saveHistory(totalTime);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [timeLeft]);
+
+
   const setTimer = (seconds) => {
-    clearInterval(intervalRef.current);
     setTimeLeft(seconds);
     setTotalTime(seconds);
-    updateProgress(1);
+    setDashOffset(circumference);
   };
 
   const setCustomTimerFunc = () => {
@@ -43,48 +52,32 @@ const Meditation = () => {
     setTimer(seconds);
   };
 
-const sessionSavedRef = useRef(false);
+  const startTimer = () => {
+    if (timeLeft <= 0) return alert("Select a timer first!");
+    setTimeLeft(timeLeft);
+  };
 
-const startTimer = () => {
-  if (timeLeft <= 0) return alert("Select a timer first!");
-  clearInterval(intervalRef.current);
-  sessionSavedRef.current = false; // reset for new session
-  intervalRef.current = setInterval(() => {
-    setTimeLeft((prev) => {
-      if (prev <= 1) {
-        clearInterval(intervalRef.current);
-
-        if (!sessionSavedRef.current) {
-          sessionSavedRef.current = true; // ensure we save only once
-          saveHistory(totalTime);
-          alert("Meditation Complete! 🎵");
-        }
-
-        return 0;
-      }
-
-      updateProgress((prev - 1) / totalTime);
-      return prev - 1;
-    });
-  }, 1000);
-};
-
-
-  const stopTimer = () => clearInterval(intervalRef.current);
-
-  const updateProgress = (ratio) => {
-    if (progressRef.current) {
-      progressRef.current.style.strokeDashoffset = circumference * (1 - ratio);
-    }
+  const stopTimer = () => {
+    setTimeLeft(0);
+    setDashOffset(circumference);
   };
 
   const saveHistory = (duration) => {
-    const newEntry = { id: Date.now(), duration, timestamp: new Date().toISOString() };
-    setHistory((prev) => [...prev, newEntry]);
+    setHistory((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        duration,
+        timestamp: new Date().toLocaleString(),
+      },
+    ]);
   };
 
-  const deleteHistory = (id) => setHistory((prev) => prev.filter((h) => h.id !== id));
+  const deleteHistory = (id) => {
+    setHistory((prev) => prev.filter((h) => h.id !== id));
+  };
 
+  // Format mm:ss
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, "0");
     const s = (seconds % 60).toString().padStart(2, "0");
@@ -98,12 +91,9 @@ const startTimer = () => {
         <p>Relax, meditate, and track your calm moments daily.</p>
       </header>
 
+      {/* TIMER CARD */}
       <section className="meditation-card">
         <h2>Meditation Timers</h2>
-        <p>
-          Use these timers to structure your meditation sessions, track your progress, and stay focused
-          without worrying about the clock. Select a preset duration or set a custom time for your practice.
-        </p>
 
         <div className="timer-buttons">
           {[30, 60, 120, 300, 600, 900].map((t) => (
@@ -113,6 +103,7 @@ const startTimer = () => {
           ))}
         </div>
 
+        {/* Custom timer */}
         <div className="custom-timer">
           <input
             type="number"
@@ -128,11 +119,19 @@ const startTimer = () => {
           <button onClick={setCustomTimerFunc} className="timer-btn">Set</button>
         </div>
 
+        {/* Progress ring */}
         <div className="progress-ring">
           <svg width="120" height="120">
-            <circle className="bg" r="60" cx="60" cy="60" stroke="#e0e0eb" strokeWidth="10" fill="none" />
             <circle
-              ref={progressRef}
+              className="bg"
+              r="60"
+              cx="60"
+              cy="60"
+              stroke="#e0e0eb"
+              strokeWidth="10"
+              fill="none"
+            />
+            <circle
               className="progress"
               r="60"
               cx="60"
@@ -141,19 +140,21 @@ const startTimer = () => {
               strokeWidth="10"
               fill="none"
               strokeDasharray={circumference}
-              strokeDashoffset={circumference}
+              strokeDashoffset={dashOffset}
               strokeLinecap="round"
             />
           </svg>
         </div>
 
         <div className="timer-display">{formatTime(timeLeft)}</div>
+
         <div className="timer-controls">
           <button className="timer-btn" onClick={startTimer}>Start</button>
           <button className="timer-btn" onClick={stopTimer}>Stop</button>
         </div>
       </section>
 
+      {/* VIDEOS */}
       <section className="meditation-card">
         <h2 className="videos-header">Guided Meditation Videos</h2>
         <div className="videos-grid">
@@ -170,22 +171,18 @@ const startTimer = () => {
         </div>
       </section>
 
-      <section className="meditation-card">
-        <h2>Tips for Mindfulness</h2>
-        <p>
-          Start with 5–10 minutes daily, focus on your breathing, and gradually increase your session time.
-          Be patient with yourself — mindfulness is a journey, not a race.
-        </p>
-      </section>
-
+      {/* HISTORY */}
       <section className="meditation-card">
         <h2>📝 Meditation History</h2>
         <ul className="history-list">
-          {history.length === 0 && <li className="text-muted">No sessions yet.</li>}
+          {history.length === 0 && <li>No sessions yet.</li>}
+
           {history.map((h) => (
             <li key={h.id} className="history-item">
-              {((h.duration / 60).toFixed(1))} min session on {new Date(h.timestamp).toLocaleString()}
-              <button className="delete-btn" onClick={() => deleteHistory(h.id)}>Delete</button>
+              {(h.duration / 60).toFixed(1)} min — {h.timestamp}
+              <button className="delete-btn" onClick={() => deleteHistory(h.id)}>
+                Delete
+              </button>
             </li>
           ))}
         </ul>

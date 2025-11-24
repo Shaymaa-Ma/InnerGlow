@@ -9,7 +9,6 @@ import { features, initialReviews } from "../data/homeData";
 const Home = () => {
   const [scrolled, setScrolled] = useState(false);
   const [reviews, setReviews] = useState(initialReviews);
-
   const [name, setName] = useState("");
   const [text, setText] = useState("");
   const [rating, setRating] = useState(5);
@@ -41,7 +40,7 @@ const Home = () => {
     
     <div className="home-wrapper page-entry-animate">
 
-      {/* ⭐ HERO SECTION */}
+      {/*HERO SECTION */}
       <section
         className="hero-section"
         style={{ backgroundImage: `url(${homeBg})` }}
@@ -72,7 +71,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ⭐ FEATURES SECTION */}
+      {/*FEATURES SECTION */}
       <section className={`features-section ${scrolled ? "visible" : ""}`}>
         <Container>
           <Row>
@@ -93,7 +92,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ⭐ TESTIMONIALS */}
+      {/* TESTIMONIALS */}
       <section className="testimonials-section">
         <Container>
           <h2 className="section-title">What Users Say</h2>
@@ -110,7 +109,7 @@ const Home = () => {
         </Container>
       </section>
 
-      {/* ⭐ SUBMIT REVIEW */}
+      {/* SUBMIT REVIEW */}
       <section className="submit-review-section">
         <Container>
           <h2 className="section-title">Submit Your Review</h2>
