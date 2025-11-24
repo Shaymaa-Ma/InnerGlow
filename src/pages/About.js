@@ -31,7 +31,6 @@ const About = () => {
                 healthier daily habits.
               </p>
 
-              {/* Use Link instead of useNavigate */}
               <Link to="/services" className="btn-lavender mt-3 px-4 py-2">
                 Discover More
               </Link>
