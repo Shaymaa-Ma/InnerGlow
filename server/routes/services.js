@@ -9,8 +9,7 @@ router.get("/", (req, res) => {
       console.error("MySQL query error:", err); // This logs the full error
       return res.status(500).json({ 
         error: "Database error",
-        details: err.message,      // <-- Add this
-        code: err.code             // <-- Add this
+        details: err.message,                 
       });
     }
     res.json(results);

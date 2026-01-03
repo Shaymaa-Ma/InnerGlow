@@ -16,18 +16,20 @@ app.use(cors());
 app.use(express.json());
 
 // BASE URL for images (dynamic)
-const BASE_URL = process.env.BASE_URL || `http://localhost:${port}`;
+const BASE_URL = process.env.BASEURL || `http://localhost:${port}`;
 
 // Image upload config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "images/"),
   filename: (req, file, cb) =>
     cb(null, file.originalname + "_" + Date.now() + path.extname(file.originalname)),
+
 });
 const upload = multer({ storage });
 
 // Serve uploaded images
 app.use("/images", express.static(path.join(__dirname, "images")));
+
 
 // Middleware to check JWT (optional for guests)
 const jwt = require("jsonwebtoken");
