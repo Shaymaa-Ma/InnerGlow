@@ -7,27 +7,27 @@ import "../styles/StressDetection.css";
 
 const StressDetection = () => {
   const { user, token } = useAuth();
+  const API = process.env.REACT_APP_API_URL; // <-- added
+
   const [sleep, setSleep] = useState("");
   const [systolic, setSystolic] = useState("");
   const [diastolic, setDiastolic] = useState("");
   const [resp, setResp] = useState("");
   const [heart, setHeart] = useState("");
   const [result, setResult] = useState("");
-  const [history, setHistory] = useState([]); // logged-in user
-  const [guestHistory, setGuestHistory] = useState([]); // guest local history
+  const [history, setHistory] = useState([]);
+  const [guestHistory, setGuestHistory] = useState([]);
 
-  // Load user history on mount
   useEffect(() => {
     if (user) fetchHistory();
   }, [user]);
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/stress-history", {
+      const res = await axios.get(`${API}/api/stress-history`, {
         headers: user ? { Authorization: `Bearer ${token}` } : {},
       });
 
-      // Format timestamps
       const formatted = res.data.map((entry) => ({
         ...entry,
         timestamp: new Date(entry.timestamp).toLocaleString(),
@@ -45,7 +45,6 @@ const StressDetection = () => {
       return;
     }
 
-    // Determine stress level and advice
     let stress_level = "Low";
     let advice = "Keep a calm routine!";
     if (heart > 100 || systolic > 140 || resp > 20) {
@@ -67,15 +66,11 @@ const StressDetection = () => {
     };
 
     if (user) {
-      // Logged-in user: save to backend and fetch updated list
       try {
-        const res = await axios.post(
-          "http://localhost:5000/api/stress-history",
-          entry,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        const res = await axios.post(`${API}/api/stress-history`, entry, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-        // Format timestamps
         const formatted = res.data.map((e) => ({
           ...e,
           timestamp: new Date(e.timestamp).toLocaleString(),
@@ -88,17 +83,11 @@ const StressDetection = () => {
         alert("Failed to save entry.");
       }
     } else {
-      // Guest: save locally
-      const newGuestEntry = {
-        ...entry,
-        id: Date.now(),
-        timestamp: new Date().toLocaleString(),
-      };
+      const newGuestEntry = { ...entry, id: Date.now(), timestamp: new Date().toLocaleString() };
       setGuestHistory((prev) => [newGuestEntry, ...prev]);
       setResult(`Stress Level: ${stress_level}\n${advice}`);
     }
 
-    // Reset inputs
     setSleep("");
     setSystolic("");
     setDiastolic("");
@@ -111,12 +100,12 @@ const StressDetection = () => {
 
     if (user) {
       try {
-        await axios.delete(`http://localhost:5000/api/stress-history/${entry.id}`, {
+        await axios.delete(`${API}/api/stress-history/${entry.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setHistory((prev) => prev.filter((e) => e.id !== entry.id));
       } catch (err) {
-        console.error("Error deleting entry:", err);
+        console.error("Error deleting history:", err);
         alert("Failed to delete entry.");
       }
     } else {
@@ -124,7 +113,7 @@ const StressDetection = () => {
     }
   };
 
-  const combinedHistory = [...guestHistory, ...history]; // merge guest + logged-in
+  const combinedHistory = [...guestHistory, ...history];
 
   return (
     <div className="stress-page py-5 fade-in-page">

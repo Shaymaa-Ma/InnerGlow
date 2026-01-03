@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../config/database");
 
 // Get all messages
-router.get("/api/messages", (req, res) => {
+router.get("/", (req, res) => {
   db.query("SELECT * FROM contact_messages ORDER BY created_at DESC", (err, results) => {
     if (err) return res.status(500).json({ error: err });
     res.json(results);
@@ -11,7 +11,7 @@ router.get("/api/messages", (req, res) => {
 });
 
 // Post new message
-router.post("/api/messages", (req, res) => {
+router.post("/", (req, res) => {
   const { name, email, message } = req.body;
   if (!name || !email || !message)
     return res.status(400).json({ message: "All fields are required" });

@@ -16,12 +16,13 @@ const Diet = () => {
 
     // Fetch diet items from backend API
     axios
-      .get("http://localhost:5000/api/diet")
+      .get(`${process.env.REACT_APP_API_URL}/api/diet`)
       .then((res) => {
         setDietItems(res.data.items);
         if (res.data.heroImage) setHeroImage(res.data.heroImage);
       })
       .catch((err) => console.error("Error fetching diet items:", err));
+
   }, []);
 
   return (
@@ -29,7 +30,9 @@ const Diet = () => {
       {/* Hero Section */}
       <div
         className="hero-section"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{
+          backgroundImage: heroImage ? `url(${heroImage})` : "none"
+        }}
       >
         <div className="hero-content">
           <h1>Diet for Better Mental Health</h1>
@@ -52,10 +55,11 @@ const Diet = () => {
             >
               <div className="card diet-card shadow-sm h-100 border-0">
                 <img
-                  src={item.img} // Full URL from API
+                  src={item.img}
                   className="card-img-top"
                   alt={item.name}
                 />
+
                 <div className="card-body">
                   <h5>{item.name}</h5>
                   <p>{item.description}</p>

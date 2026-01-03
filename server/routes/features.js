@@ -1,11 +1,11 @@
 const express = require("express");
 const db = require("../config/database");
 const router = express.Router();
+const BASE_URL = process.env.BASEURL || "http://localhost:5000";
 
-// Get all moods
 router.get("/", (req, res) => {
-  db.query("SELECT * FROM moods", (err, results) => {
-    if (err) return res.status(500).json({ error: err });
+  db.query("SELECT * FROM features", (err, results) => {
+    if (err) return res.status(500).json(err);
     res.json(results);
   });
 });

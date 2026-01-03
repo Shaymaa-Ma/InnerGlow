@@ -1,57 +1,53 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext"; 
+import { useAuth } from "../context/AuthContext";
 import "../styles/Meditation.css";
 
 const Meditation = () => {
-  const { user, token } = useAuth(); // logged-in user info
-  const circumference = 2 * Math.PI * 60;
+  const { user, token } = useAuth();
+  const API = process.env.REACT_APP_API_URL;
 
+  const circumference = 2 * Math.PI * 60;
   const [timeLeft, setTimeLeft] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
   const [customTime, setCustomTime] = useState("");
   const [unit, setUnit] = useState("seconds");
   const [dashOffset, setDashOffset] = useState(circumference);
-  const [history, setHistory] = useState([]);
-  const [guestHistory, setGuestHistory] = useState([]); // local history for guests
-  const [videos, setVideos] = useState([]);
-  const [sessionCompleted, setSessionCompleted] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
+  const [sessionCompleted, setSessionCompleted] = useState(false);
+  const [history, setHistory] = useState([]);
+  const [guestHistory, setGuestHistory] = useState([]);
+  const [videos, setVideos] = useState([]);
 
+  // Scroll to top on load
   useEffect(() => window.scrollTo({ top: 0, behavior: "smooth" }), []);
 
   // Fetch videos
   useEffect(() => {
-    axios.get("http://localhost:5000/api/meditation-videos")
+    axios.get(`${API}/api/meditation/meditation-videos`)
       .then(res => setVideos(res.data))
-      .catch(err => console.error("Error fetching videos:", err));
+      .catch(err => console.error(err));
   }, []);
 
-  // Fetch meditation history (only for logged-in users)
+  // Fetch user history
   useEffect(() => {
     if (!user) return;
-    axios.get("http://localhost:5000/api/meditation-history", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    axios.get(`${API}/api/meditation-history`, { headers: { Authorization: `Bearer ${token}` } })
       .then(res => {
-        const formatted = res.data.map(h => ({
-          ...h,
-          timestamp: new Date(h.timestamp).toLocaleString()
-        }));
+        const formatted = res.data.map(h => ({ ...h, timestamp: new Date(h.timestamp).toLocaleString() }));
         setHistory(formatted);
       })
-      .catch(err => console.error("Error fetching history:", err));
+      .catch(err => console.error(err));
   }, [user]);
 
-  // Timer logic
+  // Timer effect
   useEffect(() => {
-    if (timeLeft <= 0 || !isRunning) return;
+    if (!isRunning || timeLeft <= 0) return;
     const timer = setTimeout(() => {
       const newTime = timeLeft - 1;
       setTimeLeft(newTime);
       setDashOffset(circumference * (newTime / totalTime));
-
       if (newTime === 0 && !sessionCompleted) {
         alert("Meditation Complete! 🎵");
         saveHistory(totalTime);
@@ -60,7 +56,7 @@ const Meditation = () => {
       }
     }, 1000);
     return () => clearTimeout(timer);
-  }, [timeLeft, totalTime, sessionCompleted, isRunning]);
+  }, [timeLeft, totalTime, isRunning, sessionCompleted]);
 
   const setTimer = (seconds) => {
     setTimeLeft(seconds);
@@ -82,6 +78,7 @@ const Meditation = () => {
     if (timeLeft <= 0) return alert("Select a timer first!");
     setIsRunning(true);
   };
+
   const stopTimer = () => {
     setIsRunning(false);
     setTimeLeft(0);
@@ -90,37 +87,23 @@ const Meditation = () => {
 
   const saveHistory = (duration) => {
     if (user) {
-      // Logged-in user: save to backend
-      axios.post("http://localhost:5000/api/meditation-history", { duration }, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      axios.post(`${API}/api/meditation-history`, { duration }, { headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
-          const newEntry = {
-            id: res.data.id,
-            duration: res.data.duration,
-            timestamp: new Date(res.data.timestamp).toLocaleString()
-          };
+          const newEntry = { id: res.data.id, duration: res.data.duration, timestamp: new Date(res.data.timestamp).toLocaleString() };
           setHistory(prev => [newEntry, ...prev]);
         })
-        .catch(err => console.error("Error saving history:", err));
+        .catch(err => console.error(err));
     } else {
-      // Guest: save locally
-      const newGuestEntry = {
-        id: Date.now(),
-        duration,
-        timestamp: new Date().toLocaleString()
-      };
+      const newGuestEntry = { id: Date.now(), duration, timestamp: new Date().toLocaleString() };
       setGuestHistory(prev => [newGuestEntry, ...prev]);
     }
   };
 
   const deleteHistory = (entry) => {
     if (user) {
-      axios.delete(`http://localhost:5000/api/meditation-history/${entry.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      axios.delete(`${API}/api/meditation-history/${entry.id}`, { headers: { Authorization: `Bearer ${token}` } })
         .then(() => setHistory(prev => prev.filter(h => h.id !== entry.id)))
-        .catch(err => console.error("Error deleting history:", err));
+        .catch(err => console.error(err));
     } else {
       setGuestHistory(prev => prev.filter(h => h.id !== entry.id));
     }
@@ -141,47 +124,27 @@ const Meditation = () => {
         <p>Relax, meditate, and track your calm moments daily.</p>
       </header>
 
-      {/* Timer Card */}
+      {/* Timer */}
       <section className="meditation-card">
         <h2>Meditation Timers</h2>
         <div className="timer-buttons">
           {[30, 60, 120, 300, 600, 900].map(t => (
-            <button key={t} onClick={() => setTimer(t)} className="timer-btn">
-              {t >= 60 ? `${t / 60} min` : `${t} sec`}
-            </button>
+            <button key={t} onClick={() => setTimer(t)} className="timer-btn">{t >= 60 ? `${t / 60} min` : `${t} sec`}</button>
           ))}
         </div>
-
         <div className="custom-timer">
-          <input
-            type="number"
-            placeholder="Enter time"
-            value={customTime}
-            onChange={(e) => setCustomTime(e.target.value)}
-          />
-          <select value={unit} onChange={(e) => setUnit(e.target.value)}>
+          <input type="number" placeholder="Enter time" value={customTime} onChange={e => setCustomTime(e.target.value)} />
+          <select value={unit} onChange={e => setUnit(e.target.value)}>
             <option value="seconds">Seconds</option>
             <option value="minutes">Minutes</option>
             <option value="hours">Hours</option>
           </select>
           <button onClick={setCustomTimerFunc} className="timer-btn">Set</button>
         </div>
-
         <div className="progress-ring">
           <svg width="120" height="120">
-            <circle className="bg" r="60" cx="60" cy="60" stroke="#e0e0eb" strokeWidth="10" fill="none" />
-            <circle
-              className="progress"
-              r="60"
-              cx="60"
-              cy="60"
-              stroke="#8b5cf6"
-              strokeWidth="10"
-              fill="none"
-              strokeDasharray={circumference}
-              strokeDashoffset={dashOffset}
-              strokeLinecap="round"
-            />
+            <circle r="60" cx="60" cy="60" stroke="#e0e0eb" strokeWidth="10" fill="none" />
+            <circle r="60" cx="60" cy="60" stroke="#8b5cf6" strokeWidth="10" fill="none" strokeDasharray={circumference} strokeDashoffset={dashOffset} strokeLinecap="round" />
           </svg>
         </div>
         <div className="timer-display">{formatTime(timeLeft)}</div>
@@ -193,7 +156,7 @@ const Meditation = () => {
 
       {/* Videos */}
       <section className="meditation-card">
-        <h2 className="videos-header">Guided Meditation Videos</h2>
+        <h2>Guided Meditation Videos</h2>
         <div className="videos-grid">
           {videos.map(v => (
             <div key={v.id} className="video-wrapper">
@@ -205,6 +168,7 @@ const Meditation = () => {
               />
             </div>
           ))}
+
         </div>
       </section>
 

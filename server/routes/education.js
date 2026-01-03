@@ -3,7 +3,7 @@ const db = require("../config/database");
 const router = express.Router();
 
 // Get all education items
-router.get("/education", (req, res) => {
+router.get("/", (req, res) => {
     const BASE_URL = process.env.BASEURL || `http://localhost:5000`;
     db.query("SELECT * FROM education_items", (err, data) => {
         if (err) return res.status(500).json(err);

@@ -11,8 +11,10 @@ const app = express();
 const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWTSECRET;
 
-// Middleware
+
+// Middleware - CORS setU
 app.use(cors());
+
 app.use(express.json());
 
 // BASE URL for images (dynamic)
@@ -57,12 +59,18 @@ app.use("/api/auth", authRoutes);
 const appointmentRoutes = require("./routes/appointments");
 app.use("/api/appointments", appointmentRoutes);
 
-// Home, Reviews, About
+// Home
 const homeRoutes = require("./routes/home");
 app.use("/api/home", homeRoutes);
 
+//Features
+const featuresRoutes = require("./routes/features");
+app.use("/api/features", featuresRoutes);
+
+//Reviews
 const reviewsRoutes = require("./routes/reviews");
 app.use("/api/reviews", reviewsRoutes);
+
 
 const aboutRoutes = require("./routes/about");
 app.use("/api/about", aboutRoutes);

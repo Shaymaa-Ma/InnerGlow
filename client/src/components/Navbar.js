@@ -5,6 +5,7 @@ import ReorderIcon from "@mui/icons-material/Reorder";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
+  const API = process.env.REACT_APP_API_URL; //Use env variable for logo
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
@@ -17,7 +18,7 @@ const Navbar = () => {
       <div className="navbar-left">
         <Link to="/" onClick={closeMenu} className="logo-container">
           <img
-            src="http://localhost:5000/images/InnerGlow_Logo.png"
+            src={`${API}/images/InnerGlow_Logo.png`}
             alt="InnerGlow Logo"
             className="logo-image"
           />
@@ -54,9 +55,7 @@ const Navbar = () => {
         {user ? (
           <button className="logout-btn" onClick={logout}>Logout</button>
         ) : (
-          <>
-            <Link to="/auth" className="login-btn">Login/SignUp</Link>
-          </>
+          <Link to="/auth" className="login-btn">Login/SignUp</Link>
         )}
       </div>
 

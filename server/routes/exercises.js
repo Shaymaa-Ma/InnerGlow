@@ -2,36 +2,32 @@ const express = require("express");
 const db = require("../config/database");
 const router = express.Router();
 
-// Get all exercises with steps and advantages
-router.get("/exercises", (req, res) => {
-  db.query("SELECT * FROM exercises", (err, exercises) => {
-    if (err) return res.status(500).json(err);
+// Get all exercises with steps and advantages in one query
+router.get("/", (req, res) => {
+  const sql = `
+    SELECT e.id, e.name, e.img,
+           GROUP_CONCAT(DISTINCT s.step ORDER BY s.id SEPARATOR '||') AS steps,
+           GROUP_CONCAT(DISTINCT a.advantage ORDER BY a.id SEPARATOR '||') AS advantages
+    FROM exercises e
+    LEFT JOIN exercise_steps s ON s.exercise_id = e.id
+    LEFT JOIN exercise_advantages a ON a.exercise_id = e.id
+    GROUP BY e.id
+    ORDER BY e.id ASC
+  `;
 
-    const result = [];
-    let remaining = exercises.length;
+  db.query(sql, (err, results) => {
+    if (err) return res.status(500).json({ error: err });
 
-    if (remaining === 0) return res.json([]);
+    // Convert concatenated strings back to arrays
+    const exercises = results.map(row => ({
+      id: row.id,
+      name: row.name,
+      img: row.img,
+      steps: row.steps ? row.steps.split("||") : [],
+      advantages: row.advantages ? row.advantages.split("||") : []
+    }));
 
-    exercises.forEach(ex => {
-      db.query("SELECT step FROM exercise_steps WHERE exercise_id = ?", [ex.id], (err, stepsData) => {
-        if (err) return res.status(500).json(err);
-
-        db.query("SELECT advantage FROM exercise_advantages WHERE exercise_id = ?", [ex.id], (err, advData) => {
-          if (err) return res.status(500).json(err);
-
-          result.push({
-            id: ex.id,
-            name: ex.name,
-            img: ex.img,
-            steps: stepsData.map(s => s.step),
-            advantages: advData.map(a => a.advantage)
-          });
-
-          remaining--;
-          if (remaining === 0) res.json(result);
-        });
-      });
-    });
+    res.json(exercises);
   });
 });
 

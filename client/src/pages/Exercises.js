@@ -13,9 +13,10 @@ const Exercises = () => {
     }
 
     // Fetch exercises from backend
-    axios.get("http://localhost:5000/api/exercises")
+    axios.get(`${process.env.REACT_APP_API_URL}/api/exercises`)
       .then(res => setExercises(res.data))
       .catch(err => console.error("Error fetching exercises:", err));
+
   }, []);
 
   return (
@@ -37,8 +38,12 @@ const Exercises = () => {
             <div className="flip-card-inner">
               {/* Front Side */}
               <div className="flip-card-front">
-                <img src={`http://localhost:5000/images/exercises/${exercise.img}`} alt={exercise.name} className="exercise-img" />
-                <h3 className="exercise-name">{exercise.name}</h3>
+                <img
+                  src={`${process.env.REACT_APP_API_URL}/images/exercises/${exercise.img}`}
+                  alt={exercise.name}
+                  className="exercise-img"
+                />
+
               </div>
 
               {/* Back Side */}

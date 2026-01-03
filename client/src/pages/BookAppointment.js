@@ -109,7 +109,9 @@ const BookAppointment = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/appointments", {
+      const BASE_URL = process.env.REACT_APP_API_URL;
+
+      await axios.post(`${BASE_URL}/api/appointments`, {
         first_name: formData.firstName,
         last_name: formData.lastName,
         email: formData.email,
@@ -120,6 +122,7 @@ const BookAppointment = () => {
         therapist: formData.therapist || null,
         message: formData.message || null,
       });
+
 
       // Show success alert
       setAlertMsg("Appointment booked successfully!");

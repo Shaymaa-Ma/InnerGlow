@@ -3,8 +3,8 @@ const db = require("../config/database");
 const router = express.Router();
 
 // Get all diet items
-router.get("/diet", (req, res) => {
-    const BASE_URL = process.env.BASEURL || `http://localhost:5000`;
+router.get("/", (req, res) => {
+    const BASE_URL = process.env.BASEURL;
     const heroImage = `${BASE_URL}/images/diet/heroImage.png`;
     db.query("SELECT id, name, description, img FROM diet_items ORDER BY id ASC", (err, results) => {
         if (err) return res.status(500).json({ error: "Database error" });

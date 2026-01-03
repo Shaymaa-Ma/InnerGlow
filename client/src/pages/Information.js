@@ -5,33 +5,52 @@ import "../styles/Information.css";
 
 const Information = () => {
   const [educationData, setEducationData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/education")
-      .then(res => setEducationData(res.data))
-      .catch(err => console.error(err));
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/api/education`)
+      .then(res => {
+        setEducationData(res.data);
+        setLoading(false); 
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
 
   return (
     <div className="information-page">
       <div className="container">
-        <h2 className="info-title animate" style={{ animationDelay: "0s" }}>
+        <h2 className="info-title animate">
           Mental Health Education
         </h2>
 
+        {/* Cards */}
         <div className="education-grid">
-          {educationData.map((item) => (
-            <div key={item.id} className="education-card animate" style={{ animationDelay: `${item.id * 0.2}s` }}>
-              <img src={item.img} alt={item.title} />
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </div>
-          ))}
+          {!loading &&
+            educationData.map((item, index) => (
+              <div
+                key={item.id}
+                className="education-card animate"
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
+                <img src={item.img} alt={item.title} />
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
+            ))}
         </div>
 
-        <Link to="/book-appointment">
-          <button className="book-appointment-btn">Book Appointment</button>
-        </Link>
+        {/* Button (appears after cards) */}
+        {!loading && (
+          <Link to="/book-appointment">
+            <button className="book-appointment-btn animate">
+              Book Appointment
+            </button>
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -42,7 +42,9 @@ const Contact = () => {
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/api/messages", { name, email, message });
+      const BASE_URL = process.env.REACT_APP_API_URL;
+
+      await axios.post(`${BASE_URL}/api/messages`, { name, email, message });
 
       setAlertMsg("Thank you! Your message has been sent.");
       setAlertVariant("success");
@@ -60,7 +62,17 @@ const Contact = () => {
 
   return (
     <div className="contact-page fade-in">
-      <div className="contact-bg"></div>
+
+      <div
+        className="contact-bg"
+        style={{
+          backgroundImage: `url(${process.env.REACT_APP_API_URL}/images/contact-bg.png)`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          filter: "brightness(0.3)",
+        }}
+      ></div>
+
 
       <Container className="contact-container">
         {/* Alert message */}

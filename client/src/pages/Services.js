@@ -6,12 +6,13 @@ import "../styles/Services.css";
 
 const Services = () => {
   const [services, setServices] = useState([]);
+  const API = process.env.REACT_APP_API_URL; // use the .env variable
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/services")
+    axios.get(`${API}/api/services`)
       .then(res => setServices(res.data))
       .catch(err => console.error("Failed to fetch services:", err));
-  }, []);
+  }, [API]);
 
   return (
     <div className="services-page animate-page">

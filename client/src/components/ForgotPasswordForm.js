@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/ForgotPasswordForm.css";
 
 const ForgotPasswordForm = () => {
+    const API = process.env.REACT_APP_API_URL; //Use environment variable
     const [email, setEmail] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -18,8 +19,7 @@ const ForgotPasswordForm = () => {
         setLoading(true);
 
         try {
-            // Call backend API to reset password
-            const res = await fetch("http://localhost:5000/reset-password", {
+            const res = await fetch(`${API}/reset-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, newPassword }),
@@ -34,7 +34,6 @@ const ForgotPasswordForm = () => {
                 setMessage("Password updated successfully! You can now login.");
                 setEmail("");
                 setNewPassword("");
-                // Optional: redirect to login after a short delay
                 setTimeout(() => navigate("/auth"), 2000);
             }
         } catch (err) {

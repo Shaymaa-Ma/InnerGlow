@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 const AuthContext = createContext(null);
+const API = process.env.REACT_APP_API_URL; //Backend URL from env
 
 export const AuthProvider = ({ children }) => {
   // Initialize user and token from localStorage
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   // LOGIN
   const login = async (email, password) => {
     try {
-      const res = await fetch("http://localhost:5000/login", {
+      const res = await fetch(`${API}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -47,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   // SIGNUP
   const signup = async (name, email, password) => {
     try {
-      const res = await fetch("http://localhost:5000/signup", {
+      const res = await fetch(`${API}/api/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),

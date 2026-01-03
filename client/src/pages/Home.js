@@ -14,73 +14,96 @@ const Home = () => {
   const [homeBg, setHomeBg] = useState("");
   const [features, setFeatures] = useState([]);
 
+  const BASE_URL = process.env.REACT_APP_API_URL;
+
+  // Scroll handler
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+  // Fetch all reviews from backend
+  const fetchReviews = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/api/reviews`);
+      setReviews(res.data);
+    } catch (err) {
+      console.error("Failed to fetch reviews:", err);
     }
+  };
 
-    axios.get("http://localhost:5000/api/home")
-      .then((res) => {
-        const data = res.data;
-        setHeroImg(data.heroImg || "");
-        setHomeBg(data.homeBg || "");
-        setFeatures(data.features || []);
-        setReviews(data.reviews || []);
-      })
-      .catch(err => console.error(err));
+  // Fetch initial home data (hero, features, reviews)
+  useEffect(() => {
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const fetchData = async () => {
+      try {
+        // Hero and background
+        const homeRes = await axios.get(`${BASE_URL}/api/home`);
+        setHeroImg(homeRes.data.heroImg || "");
+        setHomeBg(homeRes.data.homeBg || "");
+
+        // Features
+        const featuresRes = await axios.get(`${BASE_URL}/api/features`);
+        setFeatures(featuresRes.data || []);
+
+        // Reviews
+        fetchReviews();
+      } catch (err) {
+        console.error("Failed to load home data:", err);
+      }
+    };
+
+    fetchData();
   }, []);
 
+  // Submit a new review
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     if (!name || !text) return alert("Please enter your name and review.");
 
-    const newReview = {
-      img: "default_avatar.png",
-      name,
-      text,
-      rating: parseInt(rating),
-      isNew: true, // mark as new
-      created_at: new Date().toISOString()
-    };
-
     try {
-      // Send review to backend
-      await axios.post("http://localhost:5000/api/reviews", newReview);
+      const res = await axios.post(`${BASE_URL}/api/reviews`, {
+        name,
+        text,
+        rating: parseInt(rating),
+      });
 
-      if (newReview.rating >= 3) {
-        setReviews([newReview, ...reviews]);
+      const { review, displayOnScreen } = res.data;
 
-        // Scroll directly to the first review card
+      // Display immediately if good review
+      if (displayOnScreen) {
+        setReviews((prev) => [review, ...prev]);
+
+        // Scroll to first review
         setTimeout(() => {
           const firstCard = document.querySelector(".testimonials-container .testimonial-card");
-          if (firstCard) {
-            firstCard.scrollIntoView({ behavior: "smooth", block: "center", inline: "start" });
-          }
+          if (firstCard) firstCard.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 100);
       }
 
+      // Reset form
       setName("");
       setText("");
       setRating(5);
+
+      // Refresh all reviews to sync with DB (handles deleted reviews)
+      fetchReviews();
     } catch (err) {
       console.error(err);
       alert("Failed to submit review. Please try again later.");
     }
   };
 
-
   return (
     <div className="home-wrapper page-entry-animate">
       {/* HERO SECTION */}
       <section
         className="hero-section"
-        style={{ backgroundImage: `url(${heroImg ? `http://localhost:5000/images/${heroImg}` : ""})` }}
+        style={{
+          backgroundImage: `url(${heroImg ? `${BASE_URL}/images/${heroImg}` : ""})`,
+        }}
       >
         <div className="hero-overlay"></div>
         <Container className="hero-content">
@@ -93,12 +116,14 @@ const Home = () => {
                 Improve your mood, reduce stress, cultivate mindfulness,
                 nurture emotional balance, and build a happier, healthier you — one day at a time.
               </p>
-              <Link to="/book-appointment" className="btn-gold hero-btn">Get Started</Link>
+              <Link to="/book-appointment" className="btn-gold hero-btn">
+                Get Started
+              </Link>
             </Col>
             <Col md={6} className="text-center animate-right">
               {heroImg && (
                 <img
-                  src={`http://localhost:5000/images/${heroImg}`}
+                  src={`${BASE_URL}/images/${heroImg}`}
                   alt="Hero"
                   className="hero-image"
                 />
@@ -120,7 +145,7 @@ const Home = () => {
                 >
                   <Card.Body>
                     <h3>{feat.title}</h3>
-                    <p >{feat.description}</p>
+                    <p>{feat.description}</p>
                   </Card.Body>
                 </Card>
               </Col>
@@ -135,12 +160,9 @@ const Home = () => {
           <h2 className="section-title">What Users Say</h2>
           <div className="testimonials-container">
             {reviews.map((rev, idx) => (
-              <div
-                key={idx}
-                className={`testimonial-card glass-card ${rev.isNew ? "new" : ""}`}
-              >
+              <div key={idx} className="testimonial-card glass-card">
                 <img
-                  src={`http://localhost:5000/images/${rev.img}`}
+                  src={rev.img || `${BASE_URL}/images/default_avatar.png`}
                   alt="avatar"
                   className="testimonial-avatar"
                 />
@@ -189,7 +211,6 @@ const Home = () => {
                 </Form.Select>
               </Col>
             </Row>
-
             <Form.Control
               as="textarea"
               rows={4}
@@ -198,7 +219,6 @@ const Home = () => {
               onChange={(e) => setText(e.target.value)}
               className="mb-3"
             />
-
             <Button type="submit" className="btn-gold w-100">
               Submit Review
             </Button>

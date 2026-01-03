@@ -9,14 +9,7 @@
   align-items: center;   
 }
 
-/* BACKGROUND IMAGE + DARK LAYER */
-.contact-bg {
-  position: absolute;
-  inset: 0;
-  background: url('http://localhost:5000/images/contact-bg.png') center/cover no-repeat;
-  filter: brightness(0.3);
-  z-index: -1;
-}
+
 
 /* SMOOTH FADE IN ANIMATION */
 .fade-in {

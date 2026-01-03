@@ -19,16 +19,18 @@ const MoodJournal = () => {
   const [moods, setMoods] = useState([]);
   const [quotes, setQuotes] = useState([]);
 
+  const API = process.env.REACT_APP_API_URL;
   // Load moods, quotes, and entries
   useEffect(() => {
-    axios.get("http://localhost:5000/api/moods").then((res) => setMoods(res.data));
-    axios.get("http://localhost:5000/api/quotes").then((res) => setQuotes(res.data));
+    axios.get(`${API}/api/moods`).then((res) => setMoods(res.data));
+    axios.get(`${API}/api/quotes`).then((res) => setQuotes(res.data));
+
     if (user) fetchEntries();
   }, [user]);
 
   const fetchEntries = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/journal-entries", {
+      const res = await axios.get(`${API}/api/journal-entries`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEntries(res.data);
@@ -45,14 +47,14 @@ const MoodJournal = () => {
         let res;
         if (editEntryId) {
           res = await axios.put(
-            `http://localhost:5000/api/journal-entries/${editEntryId}`,
+            `${API}/api/journal-entries/${editEntryId}`,
             { mood: selectedMood, text: journalText },
             { headers: { Authorization: `Bearer ${token}` } }
           );
           setEditEntryId(null);
         } else {
           res = await axios.post(
-            "http://localhost:5000/api/journal-entries",
+            `${API}/api/journal-entries`, 
             { mood: selectedMood, text: journalText },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -94,9 +96,7 @@ const MoodJournal = () => {
     if (!window.confirm("Are you sure you want to delete this entry?")) return;
 
     if (user) {
-      axios
-        .delete(`http://localhost:5000/api/journal-entries/${entry.id}`, {
-          headers: { Authorization: `Bearer ${token}` },
+     axios.delete(`${API}/api/journal-entries/${entry.id}`, {
         })
         .then((res) => setEntries(res.data))
         .catch((err) => {

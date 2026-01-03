@@ -4,13 +4,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/About.css";
 
+const BASE_URL = process.env.REACT_APP_API_URL; 
+
 const About = () => {
   const [aboutBg, setAboutBg] = useState("");
 
   useEffect(() => {
     const fetchAboutData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/about");
+        const res = await axios.get(`${BASE_URL}/api/about`);
         setAboutBg(res.data.aboutBg);
       } catch (err) {
         console.error(err);
@@ -21,13 +23,11 @@ const About = () => {
     fetchAboutData();
   }, []);
 
-
-  
   return (
     <div
       className="about-hero"
       style={{
-        backgroundImage: aboutBg ? `url(http://localhost:5000/images/${aboutBg})` : "none",
+        backgroundImage: aboutBg ? `url(${BASE_URL}/images/${aboutBg})` : "none",
       }}
     >
       <div className="overlay">

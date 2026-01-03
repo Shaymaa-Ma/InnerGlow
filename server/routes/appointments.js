@@ -3,7 +3,7 @@ const db = require("../config/database");
 const router = express.Router();
 
 // Post new appointment
-router.post("/appointments", (req, res) => {
+router.post("/", (req, res) => {
   const { first_name, last_name, email, birthday, appointment_date, appointment_time, service, therapist, message } = req.body;
   if (!first_name || !last_name || !email || !service || !appointment_date || !appointment_time)
     return res.status(400).json({ message: "Missing required fields" });
