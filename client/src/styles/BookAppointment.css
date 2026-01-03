@@ -1,0 +1,252 @@
+/* =====================================
+   PAGE CONTAINER
+===================================== */
+.book-appointment-page {
+  padding: 100px 20px 60px;
+  min-height: 100vh;
+  background: #f3edff;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* =====================================
+   PAGE TITLE
+===================================== */
+.appointment-title {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #4c2c75;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s forwards;
+}
+
+/* =====================================
+   GLASS CARD
+===================================== */
+.appointment-card {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 32px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 12px 32px rgba(110, 80, 200, 0.15);
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeUp 0.8s forwards;
+}
+
+/* =====================================
+   INPUTS & SELECTS
+===================================== */
+.custom-input {
+  border-radius: 12px;
+  border: 1px solid #d5c7ff;
+  padding: 10px 14px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+  border-color: #b48aff;
+  box-shadow: 0 0 8px rgba(178, 140, 255, 0.45);
+  outline: none;
+}
+
+/* Improve textarea resize behavior */
+.custom-input textarea {
+  resize: vertical;
+}
+
+/* =====================================
+   SUBMIT BUTTON
+===================================== */
+.btn-appointment {
+  background: linear-gradient(135deg, #7b32ff, #b084ff);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-appointment:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(122, 90, 248, 0.45);
+}
+
+.btn-appointment:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* =====================================
+   ANIMATIONS
+===================================== */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =====================================
+   TABLET (≤ 768px)
+===================================== */
+@media (max-width: 768px) {
+  .book-appointment-page {
+    padding: 70px 15px 40px;
+  }
+
+  .appointment-title {
+    font-size: 1.9rem;
+    margin-bottom: 30px;
+  }
+
+  .appointment-card {
+    padding: 24px;
+    border-radius: 18px;
+  }
+
+  .custom-input {
+    font-size: 0.95rem;
+    padding: 9px 12px;
+  }
+
+  .btn-appointment {
+    font-size: 1.05rem;
+  }
+}
+
+/* =========================
+   LAVENDER ALERT CARD
+========================= */
+.alert-card {
+  background-color: lavender;
+  color: #4b0082;
+  padding: 2rem;
+  max-width: 450px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeUp 0.8s forwards;
+}
+
+.alert-card .btn-appointment {
+  margin-top: 1rem;
+  background-color: #4b0082;
+  border: none;
+}
+
+
+/* =====================================
+   MOBILE (≤ 480px)
+===================================== */
+@media (max-width: 480px) {
+  .book-appointment-page {
+    padding: 50px 12px 30px;
+  }
+
+  .appointment-title {
+    font-size: 1.55rem;
+    margin-bottom: 22px;
+  }
+
+  .appointment-card {
+    width: 100%;
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+  .custom-input {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
+
+  .btn-appointment {
+    font-size: 1rem;
+    padding: 10px 0;
+  }
+}
+
+/* LOGIN MODAL STYLING */
+.login-modal .modal-content {
+  background: #f3edff; /* soft lavender */
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 12px 32px rgba(110, 80, 200, 0.2);
+}
+
+.login-modal .modal-header {
+  border-bottom: none;
+  color: #4c2c75;
+  font-weight: 600;
+}
+
+.login-modal .modal-body {
+  color: #4c2c75;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.login-modal .modal-footer {
+  border-top: none;
+  justify-content: center;
+}
+
+.login-modal .btn-primary {
+  background-color: #4c2c75;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+.login-modal .btn-light {
+  border-radius: 12px;
+  font-weight: 600;
+  color: #4c2c75;
+  border: 1px solid #d5c7ff;
+}
+
+.login-modal .btn-primary:hover {
+  background-color: #7b32ff;
+}
+
+/* =====================================
+   SUCCESS ALERT
+===================================== */
+.success-alert {
+  background-color: #d4edda; /* soft green */
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 15px 20px;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 0 auto 20px auto;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  animation: fadeDown 0.5s ease;
+}
+
+/* Optional fade-down animation */
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

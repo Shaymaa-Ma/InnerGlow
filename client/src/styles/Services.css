@@ -1,0 +1,165 @@
+.services-page {
+  --bg-light: #f4f1ff;
+  --card-bg: #ffffff;
+  --primary: #7b4bff;
+  --primary-hover: #6532f0;
+  --text-dark: #2b2b42;
+  --highlight: #e9ddff;
+
+  background: url('http://localhost:5000/images/services-bg.png') center/cover no-repeat;
+  min-height: 100vh;
+  padding-top: 90px;
+  padding-bottom: 40px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Overlay if needed for readability */
+.services-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(244, 241, 255, 0.8);
+  z-index: 0;
+}
+
+.services-page>* {
+  position: relative;
+  z-index: 1;
+}
+
+/* TITLE */
+.services-title {
+  text-align: center;
+  margin: 40px 0 20px;
+  color: var(--text-dark);
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+/* CARD GRID */
+.services-row {
+  margin-bottom: 40px;
+}
+
+/* CARD */
+.service-card {
+  background: var(--card-bg);
+  padding: 30px;
+  text-align: center;
+  border-radius: 40% 60% 65% 35% / 45% 40% 60% 55%;
+  transition: 0.35s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+.service-card:hover {
+  transform: translateY(-8px) rotate(1deg);
+  border-color: #c8b6ff;
+  background: #f5efff;
+}
+
+/* EMOJI */
+.service-card .emoji {
+  font-size: 4rem;
+  margin-bottom: 15px;
+}
+
+/* CARD HEADINGS */
+.service-card h3 {
+  font-size: 1.4rem;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+/* PARAGRAPHS */
+.service-card p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* BUTTONS */
+.service-btn {
+  background: linear-gradient(135deg, #7b32ff, #b084ff);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 50px;
+  transition: 0.3s ease;
+  text-decoration: none;
+  /* remove underline */
+  display: inline-block;
+}
+
+.service-btn:hover {
+  background-color: #b095ff;
+  transform: scale(1.05);
+}
+
+/* --- Page fade in --- */
+.animate-page {
+  opacity: 0;
+  animation: fadeInPage 1s ease forwards;
+}
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- Card fade-in and slide-up --- */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-card {
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+  .service-btn {
+    padding: 7px 16px;
+    font-size: 13px;
+    display: inline-block;
+  }
+
+  .service-card {
+    padding: 20px;
+    border-radius: 30% 70% 70% 30% / 40% 30% 70% 60%;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .service-card .emoji {
+    font-size: 3rem;
+  }
+
+  .service-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .service-card p {
+    font-size: 14px;
+  }
+}

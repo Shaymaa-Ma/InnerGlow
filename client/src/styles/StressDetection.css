@@ -1,0 +1,198 @@
+/* ------------------------------
+   GLOBAL STYLING
+--------------------------------*/
+body {
+  background-color: #f3eafe !important; 
+  font-family: Arial, sans-serif;
+}
+
+/* Page fade-in animation */
+.fade-in-page {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------------
+   INPUTS
+--------------------------------*/
+.custom-input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  transition: 0.3s;
+}
+
+.custom-input:focus,
+.custom-input:hover {
+  border-color: #b084f5; 
+  box-shadow: 0 0 5px #b084f5; 
+  outline: none;
+}
+
+.card-stress .form-label {
+  color: #000 !important;
+  font-weight: 500;
+}
+
+/* ------------------------------
+   BUTTONS
+--------------------------------*/
+.btn-lavender {
+  background: linear-gradient(135deg, #621ce3, #b084ff);  
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 0;
+  border-radius: 4px;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.btn-lavender:hover {
+  background-color: #b084ff; 
+}
+
+.btn-delete {
+  background: #b084f5;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-delete:hover {
+  background: #c4a6f8;
+  color: #fff;
+}
+
+.book-appointment-btn {
+  display: block; 
+  margin: 40px auto 0; 
+  padding: 14px 34px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #621ce3, #b084ff);
+  color: white;
+  box-shadow: 0 6px 20px rgba(122, 90, 248, 0.3);
+  transition: 0.3s ease;
+}
+
+.book-appointment-btn:hover {
+  background: #6843f5;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(122, 90, 248, 0.45);
+}
+
+/* ------------------------------
+   RESULT BOX
+--------------------------------*/
+.result-box {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  color: #000; 
+  margin-top: 12px;
+}
+
+/* ------------------------------
+   CARD STYLING
+--------------------------------*/
+.card-stress,
+.card-history {
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.card-history .card {
+  background: #fff !important; 
+  color: #000 !important; 
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.card-history .card strong,
+.card-history .card em,
+.card-history .card p {
+  color: #000 !important;
+}
+
+/* Stress level border colors */
+.card-history .card.border-success { border-left: 6px solid #10b981; } /* Low */
+.card-history .card.border-warning { border-left: 6px solid #f59e0b; } /* Medium */
+.card-history .card.border-danger  { border-left: 6px solid #ef4444; } /* High */
+
+/* Delete button inside history card */
+.card-history .btn-delete {
+  float: right;
+  margin-top: 5px;
+}
+
+/* ------------------------------
+   RESPONSIVE STYLING
+--------------------------------*/
+@media (max-width: 768px) {
+  .custom-input {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+
+  .btn-lavender,
+  .btn-delete,
+  .book-appointment-btn {
+    padding: 10px 0;
+    font-size: 0.95rem;
+  }
+
+  .card-history .card {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-input {
+    font-size: 0.85rem;
+    padding: 6px 8px;
+  }
+
+  .btn-lavender,
+  .btn-delete,
+  .book-appointment-btn {
+    width: 100%;
+    font-size: 0.85rem;
+    padding: 8px 0;
+    margin-bottom: 6px;
+  }
+
+  .card-history .card {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .card-history .btn-delete {
+    float: none;
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  .card-history .card p,
+  .card-history .card h5 {
+    text-align: center;
+  }
+}

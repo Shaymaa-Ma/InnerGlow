@@ -1,0 +1,16 @@
+.footer {
+  background-color: #ffffff; /* same as navbar */
+  color: #2b2b42;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}

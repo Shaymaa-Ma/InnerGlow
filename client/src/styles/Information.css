@@ -1,0 +1,155 @@
+.information-page {
+  padding: 100px 20px 60px;
+  min-height: 100vh;
+  background: #f4f1ff;
+  font-family: 'Inter', sans-serif;
+}
+
+.animate {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #2b2b42;
+}
+
+.education-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.education-card {
+  width: 100%;
+  max-width: 320px;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+}
+
+.education-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+}
+
+.education-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.education-card h3 {
+  font-size: 1.35rem;
+  margin: 15px 10px 10px;
+  color: #3b3b6d;
+}
+
+.education-card p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0 10px 15px;
+  line-height: 1.5;
+}
+
+.book-appointment-btn {
+  display: block;
+  margin: 40px auto 0;
+  padding: 14px 34px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #621ce3, #b084ff);
+  color: white;
+  box-shadow: 0 6px 20px rgba(122, 90, 248, 0.3);
+  transition: 0.3s ease;
+}
+
+.book-appointment-btn:hover {
+  background: #6843f5;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(122, 90, 248, 0.45);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .information-page {
+    padding: 60px 15px 40px;
+  }
+
+  .info-title {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+  }
+
+  .education-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .education-card {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .education-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .education-card p {
+    font-size: 0.9rem;
+    margin: 0 8px 12px;
+  }
+
+  .education-card img {
+    height: 160px;
+  }
+
+  .book-appointment-btn {
+    padding: 12px 28px;
+    font-size: 1rem;
+    margin: 30px auto 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  .info-title {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+  }
+
+  .education-card img {
+    height: 140px;
+  }
+
+  .education-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .education-card p {
+    font-size: 0.85rem;
+  }
+
+  .book-appointment-btn {
+    padding: 10px 24px;
+    font-size: 0.95rem;
+  }
+}

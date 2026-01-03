@@ -1,0 +1,35 @@
+
+/* App.css - global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  /* Make room for fixed navbar */
+  padding-top: 100px; /* same as navbar height */
+  background: #f3edff; /* optional background */
+}
+
+.page-content {
+  /* any wrapper for page sections */
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Make sure links and buttons inherit font styling */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Optional: smooth scroll for all pages */
+html {
+  scroll-behavior: smooth;
+}

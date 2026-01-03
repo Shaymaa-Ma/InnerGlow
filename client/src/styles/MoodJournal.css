@@ -1,0 +1,249 @@
+/* ------------------------------
+   GLOBAL PAGE DESIGN
+--------------------------------*/
+.mood-journal-page {
+  background: radial-gradient(circle at top, #1a1425, #0d0b14 70%);
+  min-height: 100vh;
+  padding-top: 40px;
+  color: #fff;
+  animation: fadeIn 0.8s ease;
+}
+
+h2, h5 {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ------------------------------
+   CARD BASE STYLING
+--------------------------------*/
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  transition: all 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgb(127, 125, 125);
+}
+
+/* Entries card */
+.card-entries {
+  margin-top: 20px;
+}
+
+/* ------------------------------
+   TITLES
+--------------------------------*/
+.card-title {
+  color: #f0f0f5 !important;
+  font-weight: 600;
+}
+
+.card p,
+.card label {
+  color: #d0d0d5 !important;
+}
+
+/* ------------------------------
+   INPUTS
+--------------------------------*/
+.form-select,
+.form-control {
+  background: rgb(232, 227, 227) !important;
+  color: #1a1a1a !important;
+  border: 1px solid #c9c9cc !important;
+  border-radius: 10px !important;
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: #9d9db0 !important;
+  box-shadow: 0 0 4px rgba(180, 180, 200, 0.6) !important;
+}
+
+/* ------------------------------
+   BUTTONS
+--------------------------------*/
+.btn-violet,
+.btn-cyan {
+  padding: 8px 16px;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+
+.btn-violet {
+  background: linear-gradient(135deg, #7b32ff, #b084ff);
+  color: white;
+  border: none;
+}
+
+.btn-violet:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(176, 132, 255, 0.4);
+}
+
+.btn-cyan {
+  background: linear-gradient(135deg, #19d3da, #0ab8be);
+  color: white;
+  border: none;
+}
+
+.btn-cyan:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(25, 211, 218, 0.4);
+}
+
+/* Button wrapper inside card */
+.card-entry .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: flex-start;
+}
+
+.card-entry .button-group .btn-violet,
+.card-entry .button-group .btn-cyan {
+  flex: 1 1 auto;
+  min-width: 90px;
+  max-width: 45%;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+/* ------------------------------
+   ENTRIES LIST
+--------------------------------*/
+.entry-text {
+  color: #ffffff !important;
+}
+
+.list-unstyled li {
+  padding: 12px 0;
+  transition: all 0.2s ease;
+}
+
+.list-unstyled li:hover {
+  background: rgba(255, 255, 255, 0.06);
+  padding-left: 10px;
+  border-radius: 8px;
+}
+
+/* ------------------------------
+   QUOTE POPUP SMOOTH FADE
+--------------------------------*/
+.quote-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #7b32ff, #b084ff);
+  padding: 25px 35px;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 500;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  max-width: 80%;
+  z-index: 9999;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+
+  opacity: 0;
+  transform: translate(-50%, -60%);
+  animation: quoteFadeInOut 5s forwards;
+}
+
+@keyframes quoteFadeInOut {
+  0% { opacity: 0; transform: translate(-50%, -60%) scale(0.9); }
+  10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  90% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -40%) scale(0.9); }
+}
+
+/* ------------------------------
+   CHART IMPROVEMENTS
+--------------------------------*/
+.card-trend {
+  position: relative;
+}
+
+.recharts-wrapper {
+  filter: drop-shadow(0 0 6px rgba(138, 43, 226, 0.3));
+}
+
+/* ------------------------------
+   ANIMATIONS
+--------------------------------*/
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease;
+}
+
+/* Unified dark-gray background for all main cards */
+.card-entry,
+.card-trend,
+.card-entries {
+  background: #34343a !important;      
+  border: 1px solid #3a3a40 !important; 
+  border-radius: 14px;
+  color: #e8e8e8;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* ------------------------------
+   BOOK APPOINTMENT BUTTON
+--------------------------------*/
+.book-appointment-btn {
+  display: block; 
+  margin: 40px auto 0; 
+  padding: 14px 34px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background: #7a5af8; 
+  color: white;
+  box-shadow: 0 6px 20px rgba(122, 90, 248, 0.3);
+  transition: 0.3s ease;
+}
+
+.book-appointment-btn:hover {
+  background: #6843f5;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(122, 90, 248, 0.45);
+}
+
+/* ------------------------------
+   MOBILE RESPONSIVE
+--------------------------------*/
+@media (max-width: 768px) {
+  .card-entry {
+    padding: 15px;
+  }
+
+  .card-entry .button-group .btn-violet,
+  .card-entry .button-group .btn-cyan {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    margin: 4px 4px 0 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-entry .button-group .btn-violet,
+  .card-entry .button-group .btn-cyan {
+    width: 48%;
+    font-size: 0.8rem;
+  }
+}

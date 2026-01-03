@@ -1,0 +1,223 @@
+/* --- General Page --- */
+.diet-page {
+  font-family: 'Nunito', sans-serif;
+  background: #f9f7f3;
+  overflow-x: hidden;
+  padding-top: 1px; /* ensures page opens at top */
+}
+
+/* --- Fade Animations --- */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  padding: 6rem 2rem;
+  position: relative;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 60vh; /* ensures hero occupies space */
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeUp 1s ease forwards;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.4);
+  z-index: 1;
+}
+
+.hero-section .hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-section h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-section p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+/* --- Diet Section --- */
+.diet-section {
+  padding: 4rem 1rem;
+}
+
+.diet-section h1 {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 2.8rem;
+  color: #4a3f8c;
+  margin-bottom: 2.5rem;
+}
+
+/* Diet Cards */
+.diet-card-wrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.diet-card-wrapper:nth-child(1) { animation-delay: 0.2s; }
+.diet-card-wrapper:nth-child(2) { animation-delay: 0.4s; }
+.diet-card-wrapper:nth-child(3) { animation-delay: 0.6s; }
+.diet-card-wrapper:nth-child(4) { animation-delay: 0.8s; }
+.diet-card-wrapper:nth-child(5) { animation-delay: 1s; }
+.diet-card-wrapper:nth-child(6) { animation-delay: 1.2s; }
+
+.card.diet-card {
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card.diet-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+.card.diet-card img {
+  object-fit: cover;
+  height: 220px;
+}
+
+.card-body h5 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.card-body p {
+  color: #555;
+}
+
+/* --- Food Pyramid Section --- */
+.pyramid-section {
+  text-align: center;
+  padding: 4rem 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 1.4s;
+}
+
+.pyramid-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.pyramid {
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+}
+
+.pyramid-level {
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.6rem 0;
+  margin: 0 auto 0.5rem;
+  border-radius: 0.5rem;
+  transition: transform 0.3s;
+}
+
+.pyramid-level:hover {
+  transform: scale(1.05);
+}
+
+/* Pyramid Colors */
+.level-1 { width: 20%; background-color: #8e44ad; }
+.level-2 { width: 35%; background-color: #20c997; }
+.level-3 { width: 50%; background-color: #ff6f61; }
+.level-4 { width: 65%; background-color: #28a745; }
+.level-5 { width: 80%; background-color: #ffc107; }
+.level-6 { width: 95%; background-color: #17a2b8; }
+
+/* --- Book Appointment Button --- */
+.book-appointment-btn {
+  background: linear-gradient(135deg, #621ce3, #b084ff);
+  border: none;
+  padding: 14px 36px;
+  font-weight: 600;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(122, 90, 248, 0.3);
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.book-appointment-btn:hover {
+  background: #6843f5;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(122, 90, 248, 0.45);
+}
+
+
+/* ---------- Responsive Fixes ---------- */
+@media (max-width: 1024px) {
+  .diet-card-wrapper {
+    width: 48%; /* 2 cards per row */
+  }
+  .pyramid {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+  .hero-section p {
+    font-size: 1rem;
+  }
+  .diet-card-wrapper {
+    width: 100%; /* 1 card per row */
+  }
+  .card.diet-card img {
+    height: 180px;
+  }
+  .pyramid-level {
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section h1 {
+    font-size: 1.5rem;
+  }
+  .hero-section p {
+    font-size: 0.9rem;
+  }
+  .card.diet-card img {
+    height: 150px;
+  }
+  .book-appointment-btn {
+    padding: 12px 28px;
+    font-size: 1rem;
+  }
+}

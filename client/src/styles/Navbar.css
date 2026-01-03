@@ -1,0 +1,260 @@
+.navbar {
+  width: 100%;
+  height: 100px;
+  background: white; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.3s;
+}
+
+.logo-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo-image {
+  height: 77px;       
+  width: auto;        
+  object-fit: contain; 
+  display: block;
+  margin: 0;           
+  transition: transform 0.3s;
+}
+
+.logo-image:hover {
+  transform: scale(1.05); 
+}
+
+.navbar-links {
+  display: flex;
+  gap: 26px;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2b2b42;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: linear-gradient(90deg, #9f84ff, #ffd700); 
+  transition: width 0.3s;
+}
+
+.navbar-links a:hover::after {
+  width: 100%;
+}
+
+/* Desktop Auth buttons */
+.navbar-auth {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.login-btn,
+.signup-btn {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2b2b42;
+  background: none;
+  border: 1px solid #9f84ff; 
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.login-btn:hover,
+.signup-btn:hover {
+  color: #fff;
+  background: linear-gradient(90deg, #9f84ff, #ffd700); 
+  border-color: #ffd700;
+}
+
+.logout-btn {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2b2b42;
+  background: none;
+  border: 1px solid #9f84ff; 
+  border-radius: 4px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logout-btn:hover {
+  color: #fff;
+  background: linear-gradient(90deg, #9f84ff, #ffd700); 
+  border-color: #ffd700;
+}
+
+/* Burger Menu */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #2b2b42;
+  transition: color 0.3s;
+}
+
+.menu-toggle:hover {
+  color: #9f84ff;
+}
+
+/* Mobile Auth Buttons */
+.mobile-auth {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.mobile-btn {
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* Desktop-only class */
+.desktop-only {
+  display: flex;
+}
+
+/* Mobile-only class */
+.mobile-only {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 100px; /* navbar height */
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: white;
+    padding: 16px 0;
+    gap: 16px;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    z-index: 999;
+  }
+
+  .navbar-links.active {
+    display: flex;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  /* Show mobile auth buttons on mobile */
+  .mobile-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* smaller gap */
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .mobile-btn {
+    width: auto;          
+    max-width: none;
+    padding: 0;         
+    font-size: 16px;       
+    color: #2b2b42;       
+    border: none;         
+    background: none;     
+    border-radius: 0;      
+    text-decoration: none; 
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+ 
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: flex;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  /* Mobile auth menu adjustments */
+  .navbar-links.active .mobile-auth {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .mobile-btn {
+    width: auto;
+    max-width: none;
+    padding: 0;
+    font-size: 16px;
+    color: #2b2b42;
+    border: none;
+    background: none;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+}
+
+/* Page padding to avoid overlap with fixed navbar */
+.page-content {
+  padding-top: 120px;
+}
+
+/* Reset default box sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
