@@ -2,11 +2,12 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const db = require("../config/database");
-
 const router = express.Router();
-const JWT_SECRET = "MoodTracker-InnerGlow";
 
-// SIGNUP
+// Use JWT secret from .env
+const JWT_SECRET = process.env.JWTSECRET;
+
+// ------------------ SIGNUP ------------------
 router.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password)
@@ -21,6 +22,8 @@ router.post("/signup", async (req, res) => {
           return res.status(400).json({ message: "Email already exists" });
         return res.status(500).json({ message: "Server error" });
       }
+
+      // Generate token for immediate login
       const token = jwt.sign({ id: result.insertId, email }, JWT_SECRET, { expiresIn: "1h" });
       res.json({ message: "User registered successfully", user: { name, email }, token });
     });
@@ -29,7 +32,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// LOGIN
+// ------------------ LOGIN ------------------
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
@@ -42,7 +45,7 @@ router.post("/login", (req, res) => {
 
     const user = results[0];
     bcrypt.compare(password, user.password)
-      .then((isMatch) => {
+      .then(isMatch => {
         if (!isMatch) return res.status(401).json({ message: "Wrong email or password" });
         delete user.password;
         const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
@@ -52,7 +55,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-// FORGOT PASSWORD
+// ------------------ FORGOT PASSWORD ------------------
 router.post("/forgot-password", (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ message: "Email is required" });
@@ -65,10 +68,11 @@ router.post("/forgot-password", (req, res) => {
   });
 });
 
-// RESET PASSWORD
+// ------------------ RESET PASSWORD ------------------
 router.post("/reset-password", async (req, res) => {
   const { email, newPassword } = req.body;
-  if (!email || !newPassword) return res.status(400).json({ message: "All fields required" });
+  if (!email || !newPassword)
+    return res.status(400).json({ message: "All fields required" });
 
   try {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
