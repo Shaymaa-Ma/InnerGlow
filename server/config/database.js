@@ -2,20 +2,17 @@ const mysql = require("mysql2");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Use Railway URL if available
 let db;
 
-if (process.env.MYSQL_URL) {
-  // If MYSQL_URL exists, parse it with mysql2
-  db = mysql.createConnection(process.env.MYSQL_URL);
+if (process.env.MYSQLURL) {
+  db = mysql.createConnection(process.env.MYSQLURL); // works if URL is valid
 } else {
-  // fallback
   db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    port: Number(process.env.DB_PORT), // important
-    database: process.env.DB_NAME,
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
+    password: process.env.MYSQLPASSWORD,
+    port: Number(process.env.MYSQLPORT), 
+    database: process.env.MYSQLDATABASE,
     charset: "utf8mb4",
     multipleStatements: true,
   });
