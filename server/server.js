@@ -13,12 +13,13 @@ const JWT_SECRET = process.env.JWTSECRET;
 
 
 // Middleware - CORS setU
-app.use(cors(
-  app.use(cors)({
-    origin: ["http://localhost:3000",
-      "https://innergloww.netlify.app"],
-    credentials: true
-  })));
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://innergloww.netlify.app"
+  ],
+  credentials: true
+}));
 
 app.use(express.json());
 
