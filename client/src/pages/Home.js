@@ -23,11 +23,12 @@ const Home = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Fetch all reviews from backend
+  // Fetch reviews - only good reviews are displayed
   const fetchReviews = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/api/reviews`);
-      setReviews(res.data);
+      const goodReviews = res.data.filter(r => r.rating >= 3); // only good reviews
+      setReviews(goodReviews);
     } catch (err) {
       console.error("Failed to fetch reviews:", err);
     }
@@ -74,7 +75,7 @@ const Home = () => {
 
       // Display immediately if good review
       if (displayOnScreen) {
-        setReviews((prev) => [review, ...prev]);
+        setReviews(prev => [review, ...prev]);
 
         // Scroll to first review
         setTimeout(() => {
@@ -88,7 +89,7 @@ const Home = () => {
       setText("");
       setRating(5);
 
-      // Refresh all reviews to sync with DB (handles deleted reviews)
+      // Refresh reviews to sync with DB (only good ones)
       fetchReviews();
     } catch (err) {
       console.error(err);
