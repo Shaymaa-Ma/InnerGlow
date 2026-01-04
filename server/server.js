@@ -1,4 +1,4 @@
-// server.js
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -12,7 +12,7 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWTSECRET;
 
 
-// Middleware - CORS setU
+// Middleware - CORS setUp
 app.use(cors({
   origin: [
     "http://localhost:3000",
@@ -21,9 +21,11 @@ app.use(cors({
   credentials: true
 }));
 
+//app.use(cors({}));
+
 app.use(express.json());
 
-// BASE URL for images (dynamic)
+// BASEURL for images (dynamic)
 const BASE_URL = process.env.BASEURL || `http://localhost:${port}`;
 
 // Image upload config
