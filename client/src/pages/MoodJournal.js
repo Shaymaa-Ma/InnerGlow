@@ -30,7 +30,7 @@ const MoodJournal = () => {
 
   const fetchEntries = async () => {
     try {
-      const res = await axios.get(`${API}/api/journal-entries`, {
+      const res = await axios.get(`${API}/api/journal/journal-entries`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEntries(res.data);
@@ -47,14 +47,14 @@ const MoodJournal = () => {
         let res;
         if (editEntryId) {
           res = await axios.put(
-            `${API}/api/journal-entries/${editEntryId}`,
+            `${API}/api/journal/journal-entries/${editEntryId}`,
             { mood: selectedMood, text: journalText },
             { headers: { Authorization: `Bearer ${token}` } }
           );
           setEditEntryId(null);
         } else {
           res = await axios.post(
-            `${API}/api/journal-entries`, 
+            `${API}/api/journal/journal-entries`, 
             { mood: selectedMood, text: journalText },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -93,20 +93,22 @@ const MoodJournal = () => {
   };
 
   const handleDelete = (entry) => {
-    if (!window.confirm("Are you sure you want to delete this entry?")) return;
+  if (!window.confirm("Are you sure you want to delete this entry?")) return;
 
-    if (user) {
-     axios.delete(`${API}/api/journal-entries/${entry.id}`, {
-        })
-        .then((res) => setEntries(res.data))
-        .catch((err) => {
-          console.error(err);
-          alert("Failed to delete entry.");
-        });
-    } else {
-      setGuestEntries((prev) => prev.filter((e) => e.id !== entry.id));
-    }
-  };
+  if (user) {
+    axios.delete(`${API}/api/journal/journal-entries/${entry.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) => setEntries(res.data))
+    .catch((err) => {
+      console.error(err);
+      alert("Failed to delete entry.");
+    });
+  } else {
+    setGuestEntries((prev) => prev.filter((e) => e.id !== entry.id));
+  }
+};
+
 
   const generateQuote = () => {
     if (!quotes.length) return;

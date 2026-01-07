@@ -5,7 +5,7 @@ dotenv.config();
 let db;
 
 if (process.env.MYSQLURL) {
-  db = mysql.createConnection(process.env.MYSQLURL); // works if URL is valid
+  db = mysql.createConnection(process.env.MYSQLURL);
 } else {
   db = mysql.createConnection({
     host: process.env.MYSQLHOST,
@@ -17,6 +17,7 @@ if (process.env.MYSQLURL) {
     multipleStatements: true,
   });
 }
+
 
 db.connect((err) => {
   if (err) {

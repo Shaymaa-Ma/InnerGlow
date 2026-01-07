@@ -6,6 +6,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import axios from "axios";
 import "../styles/Contact.css";
 
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -44,7 +45,7 @@ const Contact = () => {
       setLoading(true);
       const BASE_URL = process.env.REACT_APP_API_URL;
 
-      await axios.post(`${BASE_URL}/api/messages`, { name, email, message });
+      await axios.post(`${BASE_URL}/api/contact`, { name, email, message });
 
       setAlertMsg("Thank you! Your message has been sent.");
       setAlertVariant("success");

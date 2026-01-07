@@ -24,7 +24,7 @@ const StressDetection = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await axios.get(`${API}/api/stress-history`, {
+      const res = await axios.get(`${API}/api/stress/stress-history`, {
         headers: user ? { Authorization: `Bearer ${token}` } : {},
       });
 
@@ -67,7 +67,7 @@ const StressDetection = () => {
 
     if (user) {
       try {
-        const res = await axios.post(`${API}/api/stress-history`, entry, {
+        const res = await axios.post(`${API}/api/stress/stress-history`, entry, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -100,7 +100,7 @@ const StressDetection = () => {
 
     if (user) {
       try {
-        await axios.delete(`${API}/api/stress-history/${entry.id}`, {
+        await axios.delete(`${API}/api/stress/stress-history/${entry.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setHistory((prev) => prev.filter((e) => e.id !== entry.id));

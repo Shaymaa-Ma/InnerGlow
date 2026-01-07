@@ -13,15 +13,21 @@ const JWT_SECRET = process.env.JWTSECRET;
 
 
 // Middleware - CORS setUp
+//If online 
+//app.use(cors({
+ // origin: [
+ //   "http://localhost:3000",
+   // "https://innergloww.netlify.app"
+  //],
+  //credentials: true
+//}));
+
+//If loaclly not online 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://innergloww.netlify.app"
-  ],
+  origin: ["http://localhost:3000"],
   credentials: true
 }));
 
-//app.use(cors({}));
 
 app.use(express.json());
 
@@ -121,7 +127,7 @@ app.use("/api/quotes", quotesRoutes);
 
 // Contact Messages
 const contactRoutes = require("./routes/contact");
-app.use("/api/messages", contactRoutes);
+app.use("/api/contact", contactRoutes);
 
 // --- TEST DB CONNECTION ---
 app.get("/api/test-db", (req, res) => {

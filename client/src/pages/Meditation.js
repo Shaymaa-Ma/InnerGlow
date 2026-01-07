@@ -33,7 +33,7 @@ const Meditation = () => {
   // Fetch user history
   useEffect(() => {
     if (!user) return;
-    axios.get(`${API}/api/meditation-history`, { headers: { Authorization: `Bearer ${token}` } })
+    axios.get(`${API}/api/meditation/meditation-history`, { headers: { Authorization: `Bearer ${token}` } })
       .then(res => {
         const formatted = res.data.map(h => ({ ...h, timestamp: new Date(h.timestamp).toLocaleString() }));
         setHistory(formatted);
@@ -87,7 +87,7 @@ const Meditation = () => {
 
   const saveHistory = (duration) => {
     if (user) {
-      axios.post(`${API}/api/meditation-history`, { duration }, { headers: { Authorization: `Bearer ${token}` } })
+      axios.post(`${API}/api/meditation/meditation-history`, { duration }, { headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
           const newEntry = { id: res.data.id, duration: res.data.duration, timestamp: new Date(res.data.timestamp).toLocaleString() };
           setHistory(prev => [newEntry, ...prev]);
@@ -101,7 +101,7 @@ const Meditation = () => {
 
   const deleteHistory = (entry) => {
     if (user) {
-      axios.delete(`${API}/api/meditation-history/${entry.id}`, { headers: { Authorization: `Bearer ${token}` } })
+      axios.delete(`${API}/api/meditation/meditation-history/${entry.id}`, { headers: { Authorization: `Bearer ${token}` } })
         .then(() => setHistory(prev => prev.filter(h => h.id !== entry.id)))
         .catch(err => console.error(err));
     } else {
