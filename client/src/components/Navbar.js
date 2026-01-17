@@ -36,8 +36,7 @@ const Navbar = () => {
         {/* Mobile Auth Buttons */}
         {!user && (
           <div className="mobile-auth mobile-only">
-            <Link to="/auth" onClick={closeMenu} className="login-btn mobile-btn">Login</Link>
-            <Link to="/auth" onClick={closeMenu} className="signup-btn mobile-btn">Signup</Link>
+            <Link to="/auth" onClick={closeMenu} className="login-btn mobile-btn">Login/SignUp</Link>
           </div>
         )}
         {user && (

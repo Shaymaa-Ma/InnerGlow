@@ -14,19 +14,18 @@ const JWT_SECRET = process.env.JWTSECRET;
 
 // Middleware - CORS setUp
 //If online 
-//app.use(cors({
- // origin: [
- //   "http://localhost:3000",
-   // "https://innergloww.netlify.app"
-  //],
-  //credentials: true
-//}));
-
-//If loaclly not online 
+const cors = require("cors");
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: "https://innerglow-frontend.onrender.com",
   credentials: true
 }));
+
+
+//If loaclly not online 
+//app.use(cors({
+ // origin: ["http://localhost:3000"],
+ // credentials: true
+//}));
 
 
 app.use(express.json());

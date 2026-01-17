@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { FaGooglePlusG, FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 const LoginForm = () => {
   const { login } = useAuth();
@@ -29,18 +30,19 @@ const LoginForm = () => {
 
       <div className="social-icons">
         <a href="#" className="icon" onClick={(e) => e.preventDefault()}>
-          <i className="fab fa-google-plus-g"></i>
+          <FaGooglePlusG />
         </a>
         <a href="#" className="icon" onClick={(e) => e.preventDefault()}>
-          <i className="fab fa-facebook-f"></i>
+          <FaFacebookF />
         </a>
         <a href="#" className="icon" onClick={(e) => e.preventDefault()}>
-          <i className="fab fa-github"></i>
+          <FaGithub />
         </a>
         <a href="#" className="icon" onClick={(e) => e.preventDefault()}>
-          <i className="fab fa-linkedin-in"></i>
+          <FaLinkedinIn />
         </a>
       </div>
+
 
       <span>or use your email and password</span>
 
