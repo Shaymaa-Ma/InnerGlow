@@ -14,7 +14,6 @@ const JWT_SECRET = process.env.JWTSECRET;
 
 // Middleware - CORS setUp
 //If online 
-const cors = require("cors");
 app.use(cors({
   origin: "https://innerglow-frontend.onrender.com",
   credentials: true
